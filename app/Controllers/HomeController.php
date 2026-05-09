@@ -19,11 +19,23 @@ class HomeController
 
     public function index(): void
     {
-        $model    = new ProductModel();
-        $products = $model->getProducts();
+        $model      = new ProductModel();
+        $products   = $model->getProducts();
         $categories = $this->buildCategories($products);
+        $slides     = $this->getPublicidadImages();
 
         include __DIR__ . '/../Views/home.php';
+    }
+
+    private function getPublicidadImages(): array
+    {
+        $base  = dirname(__DIR__, 2);
+        $files = glob($base . '/img/publicidad/*.{jpg,jpeg,png,webp}', GLOB_BRACE) ?: [];
+        sort($files);
+        return array_map(
+            fn(string $f): string => '/img/publicidad/' . rawurlencode(basename($f)),
+            $files
+        );
     }
 
     private function buildCategories(array $products): array
