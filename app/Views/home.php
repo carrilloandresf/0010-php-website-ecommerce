@@ -156,7 +156,7 @@ $categoryEmoji = [
                 <img
                   src="<?= htmlspecialchars($imgSrc) ?>"
                   alt="<?= htmlspecialchars($p['name']) ?>"
-                  class="flex-shrink-0 w-full h-full object-cover"
+                  class="flex-shrink-0 w-full h-full object-contain"
                   loading="lazy">
                 <?php endforeach; ?>
               <?php else: ?>
@@ -247,7 +247,7 @@ $categoryEmoji = [
         <div class="relative mx-4 md:mx-0 rounded-2xl md:rounded-none overflow-hidden bg-gray-50
                     aspect-square md:aspect-auto md:flex-1">
           <img id="modal-main-img" src="" alt=""
-            class="w-full h-full object-cover">
+            class="w-full h-full object-contain">
           <div id="modal-emoji-fallback"
             class="hidden absolute inset-0 bg-gray-50 items-center justify-center text-6xl">
           </div>
@@ -653,7 +653,7 @@ function renderModalGallery() {
         <button onclick="setModalImg(${i})"
           class="flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 transition
                  ${i === modalImgIdx ? 'border-usared' : 'border-transparent opacity-50 hover:opacity-80'}">
-          <img src="${src}" class="w-full h-full object-cover" loading="lazy">
+          <img src="${src}" class="w-full h-full object-contain" loading="lazy">
         </button>`
       ).join('')
     : '';
