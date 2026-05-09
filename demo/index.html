@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="es" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USA Imports</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#0A1628',
+            usared: '#B22234',
+            usablue: '#3C3B6E',
+            usalight: '#EDF2F7'
+          },
+          fontFamily: {
+            display: ['Bebas Neue', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    .carousel-track { display: flex; animation: scroll 20s linear infinite; }
+    @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .cart-badge { animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+    .product-card { transition: transform 0.2s; }
+    .product-card:active { transform: scale(0.97); }
+    .fade-in { animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .category-pill { scroll-snap-align: start; }
+    .categories-scroll { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+    .slide-up { animation: slideUp 0.3s ease; }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-white font-body text-navy overflow-auto"><!-- Main App -->
+  <div id="app" class="h-full w-full flex flex-col"><!-- Header -->
+   <header class="sticky top-0 z-50 bg-navy text-white px-4 py-3 flex items-center justify-between shadow-lg">
+    <div class="flex items-center gap-2"><span class="text-2xl">🇺🇸</span>
+     <h1 id="store-title" class="font-display text-xl tracking-wide">USA IMPORTS</h1>
+    </div><button id="cart-btn" class="relative p-2" onclick="toggleCart()"> <i data-lucide="shopping-bag" class="w-6 h-6"></i> <span id="cart-count" class="absolute -top-1 -right-1 bg-usared text-white text-xs w-5 h-5 rounded-full flex items-center justify-center cart-badge hidden">0</span> </button>
+   </header><!-- Content -->
+   <main class="flex-1 overflow-auto" id="main-content"><!-- Hero Banner -->
+    <section class="bg-gradient-to-br from-usablue via-navy to-usablue text-white px-5 py-8 text-center">
+     <h2 id="hero-heading" class="font-display text-4xl mb-2">DIRECTO DESDE USA 🇺🇸</h2>
+     <p class="text-sm opacity-80 mb-4">Productos originales importados · Envío a todo el país</p>
+     <div class="flex justify-center gap-3"><span class="bg-usared/90 text-xs font-semibold px-3 py-1 rounded-full">✓ Originales</span> <span class="bg-white/20 text-xs font-semibold px-3 py-1 rounded-full">✓ Garantía</span> <span class="bg-white/20 text-xs font-semibold px-3 py-1 rounded-full">✓ Envíos</span>
+     </div>
+    </section><!-- Photo Carousel -->
+    <section class="overflow-hidden bg-gray-100 py-3">
+     <div class="carousel-track">
+      <div class="flex gap-3 px-3">
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-usablue to-blue-400 flex items-center justify-center text-3xl flex-shrink-0">
+        📱
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-red-500 to-pink-400 flex items-center justify-center text-3xl flex-shrink-0">
+        🎧
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-green-500 to-emerald-400 flex items-center justify-center text-3xl flex-shrink-0">
+        🎮
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-400 flex items-center justify-center text-3xl flex-shrink-0">
+        🔊
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-400 flex items-center justify-center text-3xl flex-shrink-0">
+        📷
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-300 flex items-center justify-center text-3xl flex-shrink-0">
+        🕶️
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center text-3xl flex-shrink-0">
+        🧳
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-pink-400 to-red-400 flex items-center justify-center text-3xl flex-shrink-0">
+        💡
+       </div>
+      </div>
+      <div class="flex gap-3 px-3">
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-usablue to-blue-400 flex items-center justify-center text-3xl flex-shrink-0">
+        📱
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-red-500 to-pink-400 flex items-center justify-center text-3xl flex-shrink-0">
+        🎧
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-green-500 to-emerald-400 flex items-center justify-center text-3xl flex-shrink-0">
+        🎮
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-400 flex items-center justify-center text-3xl flex-shrink-0">
+        🔊
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-400 flex items-center justify-center text-3xl flex-shrink-0">
+        📷
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-300 flex items-center justify-center text-3xl flex-shrink-0">
+        🕶️
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center text-3xl flex-shrink-0">
+        🧳
+       </div>
+       <div class="w-28 h-28 rounded-xl bg-gradient-to-br from-pink-400 to-red-400 flex items-center justify-center text-3xl flex-shrink-0">
+        💡
+       </div>
+      </div>
+     </div>
+    </section><!-- Categories -->
+    <section class="py-4 px-4">
+     <h3 class="font-bold text-lg mb-3">Categorías</h3>
+     <div class="categories-scroll flex gap-2 overflow-x-auto pb-2" id="categories-bar"><!-- Generated by JS -->
+     </div>
+    </section><!-- Featured Products -->
+    <section class="px-4 pb-4" id="featured-section">
+     <div class="flex items-center justify-between mb-3">
+      <h3 class="font-bold text-lg">🔥 Destacados</h3><span class="text-xs text-usared font-semibold">Importados USA</span>
+     </div>
+    </section><!-- Products Grid -->
+    <section class="px-4 pb-24" id="products-grid"><!-- Generated by JS -->
+    </section>
+   </main><!-- Cart Overlay -->
+   <div id="cart-overlay" class="fixed inset-0 z-[100] hidden">
+    <div class="absolute inset-0 bg-black/50" onclick="toggleCart()"></div>
+    <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl max-h-[80%] flex flex-col slide-up">
+     <div class="flex items-center justify-between p-4 border-b">
+      <h3 class="font-bold text-lg">Tu Carrito 🛒</h3><button onclick="toggleCart()" class="p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
+     </div>
+     <div id="cart-items" class="flex-1 overflow-auto p-4">
+      <p id="cart-empty" class="text-center text-gray-400 py-8">Tu carrito está vacío</p>
+     </div>
+     <div id="cart-footer" class="p-4 border-t hidden">
+      <div class="flex justify-between mb-3"><span class="font-semibold">Total:</span> <span id="cart-total" class="font-bold text-usared text-lg">$0</span>
+      </div><button onclick="sendWhatsApp()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition">
+       <svg class="w-5 h-5" viewbox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" /><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492l4.625-1.467A11.932 11.932 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-2.17 0-4.207-.58-5.963-1.588l-.428-.254-2.742.87.885-2.666-.279-.442A9.722 9.722 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z" />
+       </svg> Comprar por WhatsApp </button>
+     </div>
+    </div>
+   </div><!-- WhatsApp Float --> <a id="wa-float" href="#" target="_blank" rel="noopener noreferrer" class="fixed bottom-5 right-5 z-50 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition">
+    <svg class="w-7 h-7" viewbox="0 0 24 24" fill="currentColor">
+     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" /><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492l4.625-1.467A11.932 11.932 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-2.17 0-4.207-.58-5.963-1.588l-.428-.254-2.742.87.885-2.666-.279-.442A9.722 9.722 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z" />
+    </svg></a>
+  </div>
+  <script>
+// Config
+const defaultConfig = {
+  store_name: 'USA IMPORTS',
+  whatsapp_number: '+573001234567',
+  hero_title: 'DIRECTO DESDE USA 🇺🇸',
+  background_color: '#FFFFFF',
+  surface_color: '#0A1628',
+  text_color: '#0A1628',
+  primary_action_color: '#B22234',
+  secondary_action_color: '#3C3B6E',
+  font_family: 'DM Sans',
+  font_size: 16
+};
+
+// Products Data
+const categories = [
+  { id: 'all', name: 'Todo', emoji: '🔥' },
+  { id: 'celulares', name: 'Celulares', emoji: '📱' },
+  { id: 'audifonos', name: 'Audífonos', emoji: '🎧' },
+  { id: 'tablets', name: 'Tablets', emoji: '📲' },
+  { id: 'consolas', name: 'Consolas', emoji: '🎮' },
+  { id: 'parlantes', name: 'Parlantes', emoji: '🔊' },
+  { id: 'cargadores', name: 'Cargadores', emoji: '🔋' },
+  { id: 'camaras', name: 'Cámaras', emoji: '📷' },
+  { id: 'iluminacion', name: 'Iluminación', emoji: '💡' },
+  { id: 'gafas', name: 'Gafas', emoji: '🕶️' },
+  { id: 'apple', name: 'Apple', emoji: '🍎' },
+  { id: 'maletas', name: 'Maletas', emoji: '🧳' }
+];
+
+const products = [
+  { id: 1, name: 'iPhone 15 Pro Max', price: 4200000, category: 'celulares', emoji: '📱', badge: '🔥 Hot', featured: true },
+  { id: 2, name: 'Samsung Galaxy S24 Ultra', price: 3800000, category: 'celulares', emoji: '📱', badge: 'Nuevo', featured: true },
+  { id: 3, name: 'AirPods Pro 2', price: 850000, category: 'audifonos', emoji: '🎧', badge: '⭐ Top', featured: true },
+  { id: 4, name: 'JBL Flip 5', price: 420000, category: 'parlantes', emoji: '🔊', badge: 'Popular', featured: true },
+  { id: 5, name: 'Nintendo Switch OLED', price: 1600000, category: 'consolas', emoji: '🎮', badge: '🎯 Oferta', featured: true },
+  { id: 6, name: 'iPad Air M2', price: 2900000, category: 'tablets', emoji: '📲', featured: false },
+  { id: 7, name: 'Galaxy Buds FE', price: 350000, category: 'audifonos', emoji: '🎧', featured: false },
+  { id: 8, name: 'Motorola Razr', price: 2200000, category: 'celulares', emoji: '📱', featured: false },
+  { id: 9, name: 'Ring Video Doorbell', price: 580000, category: 'camaras', emoji: '📷', badge: 'Seguridad', featured: true },
+  { id: 10, name: 'Ray-Ban Wayfarer', price: 650000, category: 'gafas', emoji: '🕶️', featured: false },
+  { id: 11, name: 'Oakley Holbrook', price: 720000, category: 'gafas', emoji: '🕶️', featured: false },
+  { id: 12, name: 'AirTag 4-Pack', price: 450000, category: 'apple', emoji: '🍎', badge: 'Apple', featured: true },
+  { id: 13, name: 'Power Bank 20000mAh', price: 180000, category: 'cargadores', emoji: '🔋', featured: false },
+  { id: 14, name: 'Lámpara Solar LED', price: 120000, category: 'iluminacion', emoji: '💡', featured: false },
+  { id: 15, name: 'Samsung Galaxy Tab S9', price: 1900000, category: 'tablets', emoji: '📲', featured: false },
+  { id: 16, name: 'Contixo Kids Tablet', price: 350000, category: 'tablets', emoji: '📲', badge: 'Niños', featured: false },
+  { id: 17, name: 'JBL Tune 520BT', price: 220000, category: 'audifonos', emoji: '🎧', featured: false },
+  { id: 18, name: 'Skullcandy Dime', price: 150000, category: 'audifonos', emoji: '🎧', featured: false },
+  { id: 19, name: 'Blink Mini Cámara', price: 280000, category: 'camaras', emoji: '📷', featured: false },
+  { id: 20, name: 'Maleta Samsonite Carry-On', price: 680000, category: 'maletas', emoji: '🧳', badge: 'Nuevo', featured: true },
+  { id: 21, name: 'Luces LED Sensor Movimiento', price: 95000, category: 'iluminacion', emoji: '💡', featured: false },
+  { id: 22, name: 'Samsung Galaxy usado A54', price: 750000, category: 'celulares', emoji: '📱', badge: 'Usado', featured: false },
+];
+
+let cart = [];
+let activeCategory = 'all';
+
+// Format price
+function formatPrice(n) {
+  return '$' + n.toLocaleString('es-CO');
+}
+
+// Render categories
+function renderCategories() {
+  const bar = document.getElementById('categories-bar');
+  bar.innerHTML = categories.map(c => `
+    <button onclick="filterCategory('${c.id}')" class="category-pill flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition whitespace-nowrap ${activeCategory === c.id ? 'bg-usared text-white' : 'bg-gray-100 text-navy'}">${c.emoji} ${c.name}</button>
+  `).join('');
+}
+
+// Render products
+function renderProducts() {
+  const grid = document.getElementById('products-grid');
+  let filtered = activeCategory === 'all' ? products : products.filter(p => p.category === activeCategory);
+  // Show featured first
+  filtered.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+
+  grid.innerHTML = `<div class="grid grid-cols-2 gap-3">${filtered.map(p => `
+    <div class="product-card bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative fade-in">
+      ${p.badge ? `<span class="absolute top-2 left-2 bg-usared text-white text-[10px] font-bold px-2 py-0.5 rounded-full">${p.badge}</span>` : ''}
+      <div class="w-full aspect-square bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl flex items-center justify-center text-4xl mb-2">${p.emoji}</div>
+      <h4 class="font-semibold text-xs leading-tight mb-1 line-clamp-2">${p.name}</h4>
+      <p class="text-usared font-bold text-sm mb-2">${formatPrice(p.price)}</p>
+      <button onclick="addToCart(${p.id})" class="w-full bg-navy text-white text-xs font-semibold py-2 rounded-lg flex items-center justify-center gap-1 active:bg-usablue transition">
+        <i data-lucide="plus" class="w-3 h-3"></i> Agregar
+      </button>
+    </div>
+  `).join('')}</div>`;
+  lucide.createIcons();
+}
+
+function filterCategory(id) {
+  activeCategory = id;
+  renderCategories();
+  renderProducts();
+}
+
+// Cart
+function addToCart(productId) {
+  const p = products.find(x => x.id === productId);
+  const existing = cart.find(x => x.id === productId);
+  if (existing) existing.qty++;
+  else cart.push({ ...p, qty: 1 });
+  updateCartBadge();
+  // Quick feedback
+  const btn = event.target.closest('button');
+  btn.textContent = '✓ Agregado';
+  btn.classList.add('bg-green-600');
+  setTimeout(() => { btn.innerHTML = '<i data-lucide="plus" class="w-3 h-3"></i> Agregar'; btn.classList.remove('bg-green-600'); lucide.createIcons(); }, 800);
+}
+
+function updateCartBadge() {
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  const badge = document.getElementById('cart-count');
+  if (count > 0) { badge.textContent = count; badge.classList.remove('hidden'); }
+  else badge.classList.add('hidden');
+}
+
+function toggleCart() {
+  const overlay = document.getElementById('cart-overlay');
+  overlay.classList.toggle('hidden');
+  renderCart();
+}
+
+function renderCart() {
+  const items = document.getElementById('cart-items');
+  const footer = document.getElementById('cart-footer');
+  const empty = document.getElementById('cart-empty');
+
+  if (cart.length === 0) {
+    empty.classList.remove('hidden');
+    footer.classList.add('hidden');
+    items.innerHTML = '<p id="cart-empty" class="text-center text-gray-400 py-8">Tu carrito está vacío</p>';
+    return;
+  }
+
+  footer.classList.remove('hidden');
+  items.innerHTML = cart.map(item => `
+    <div class="flex items-center gap-3 py-3 border-b">
+      <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-xl">${item.emoji}</div>
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-semibold truncate">${item.name}</p>
+        <p class="text-xs text-usared font-bold">${formatPrice(item.price)}</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="changeQty(${item.id}, -1)" class="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center text-sm font-bold">−</button>
+        <span class="text-sm font-semibold w-4 text-center">${item.qty}</span>
+        <button onclick="changeQty(${item.id}, 1)" class="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center text-sm font-bold">+</button>
+      </div>
+    </div>
+  `).join('');
+
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  document.getElementById('cart-total').textContent = formatPrice(total);
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(x => x.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(x => x.id !== id);
+  updateCartBadge();
+  renderCart();
+}
+
+function sendWhatsApp() {
+  const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+  const phone = (config.whatsapp_number || defaultConfig.whatsapp_number).replace(/[^0-9+]/g, '');
+  let msg = '¡Hola! 👋 Me interesan estos productos:\n\n';
+  cart.forEach(item => {
+    msg += `• ${item.name} x${item.qty} - ${formatPrice(item.price * item.qty)}\n`;
+  });
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  msg += `\n💰 Total: ${formatPrice(total)}\n\n¿Están disponibles?`;
+  const url = `https://wa.me/${phone.replace('+', '')}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+// Init
+renderCategories();
+renderProducts();
+
+// Update WA float link
+function updateWaFloat() {
+  const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+  const phone = (config.whatsapp_number || defaultConfig.whatsapp_number).replace(/[^0-9+]/g, '').replace('+', '');
+  document.getElementById('wa-float').href = `https://wa.me/${phone}?text=${encodeURIComponent('¡Hola! Vi sus productos importados de USA y me gustaría saber más 🇺🇸')}`;
+}
+updateWaFloat();
+
+// Element SDK
+window.elementSdk.init({
+  defaultConfig,
+  onConfigChange: async (config) => {
+    document.getElementById('store-title').textContent = (config.store_name || defaultConfig.store_name).toUpperCase();
+    document.getElementById('hero-heading').textContent = config.hero_title || defaultConfig.hero_title;
+    updateWaFloat();
+  },
+  mapToCapabilities: (config) => ({
+    recolorables: [
+      { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+      { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+      { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+      { get: () => config.primary_action_color || defaultConfig.primary_action_color, set: (v) => { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
+      { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } }
+    ],
+    borderables: [],
+    fontEditable: { get: () => config.font_family || defaultConfig.font_family, set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); } },
+    fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); } }
+  }),
+  mapToEditPanelValues: (config) => new Map([
+    ['store_name', config.store_name || defaultConfig.store_name],
+    ['whatsapp_number', config.whatsapp_number || defaultConfig.whatsapp_number],
+    ['hero_title', config.hero_title || defaultConfig.hero_title]
+  ])
+});
+
+lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f93a16505319876',t:'MTc3ODM2MDM5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
