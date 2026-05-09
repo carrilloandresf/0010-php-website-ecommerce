@@ -27,42 +27,39 @@
   </script>
   <style>
     html, body { height: 100%; margin: 0; box-sizing: border-box; }
-    .carousel-track { display: flex; animation: scroll 20s linear infinite; }
-    @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     .cart-badge { animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-    .product-card { transition: transform 0.2s; }
+    .product-card { transition: transform 0.2s; cursor: pointer; }
     .product-card:active { transform: scale(0.97); }
     .fade-in { animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
     .category-pill { scroll-snap-align: start; }
     .categories-scroll { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
-    .slide-up { animation: slideUp 0.3s ease; }
+    .slide-up { animation: slideUp 0.35s ease; }
     @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-    .img-gallery { display: flex; gap: 6px; overflow-x: auto; scroll-snap-type: x mandatory; }
-    .img-gallery img { scroll-snap-align: start; width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; border-radius: 0.75rem; }
+    .card-slides { transition: transform 0.5s ease; }
+    .modal-main-img { transition: opacity 0.25s ease; }
   </style>
 </head>
 <body class="h-full bg-white font-body text-navy overflow-auto">
 
 <?php
-/* ── helpers ─────────────────────────────────────── */
 function fmt(int $n): string {
     return '$' . number_format($n, 0, ',', '.');
 }
 
 $categoryEmoji = [
-    'celulares'  => '📱',
-    'audifonos'  => '🎧',
-    'tablets'    => '📲',
-    'consolas'   => '🎮',
-    'parlantes'  => '🔊',
-    'cargadores' => '🔋',
-    'camaras'    => '📷',
-    'iluminacion'=> '💡',
-    'gafas'      => '🕶️',
-    'apple'      => '🍎',
-    'otros'      => '📦',
+    'celulares'   => '📱',
+    'audifonos'   => '🎧',
+    'tablets'     => '📲',
+    'consolas'    => '🎮',
+    'parlantes'   => '🔊',
+    'cargadores'  => '🔋',
+    'camaras'     => '📷',
+    'iluminacion' => '💡',
+    'gafas'       => '🕶️',
+    'apple'       => '🍎',
+    'otros'       => '📦',
 ];
 ?>
 
@@ -83,48 +80,10 @@ $categoryEmoji = [
   <!-- ── Main ─────────────────────────────────────── -->
   <main class="flex-1 overflow-auto" id="main-content">
 
-    <!-- Hero -->
-    <section class="bg-gradient-to-br from-usablue via-navy to-usablue text-white px-5 py-8 text-center">
-      <h2 class="font-display text-4xl mb-2">DIRECTO DESDE USA 🇺🇸</h2>
-      <p class="text-sm opacity-80 mb-4">Productos originales importados · Envío a todo el país</p>
-      <div class="flex justify-center gap-3">
-        <span class="bg-usared/90 text-xs font-semibold px-3 py-1 rounded-full">✓ Originales</span>
-        <span class="bg-white/20 text-xs font-semibold px-3 py-1 rounded-full">✓ Garantía</span>
-        <span class="bg-white/20 text-xs font-semibold px-3 py-1 rounded-full">✓ Envíos</span>
-      </div>
-    </section>
-
-    <!-- Carousel decorativo -->
-    <section class="overflow-hidden bg-gray-100 py-3">
-      <div class="carousel-track">
-        <?php
-        $tiles = [
-            ['from-usablue','to-blue-400','📱'],
-            ['from-red-500','to-pink-400','🎧'],
-            ['from-green-500','to-emerald-400','🎮'],
-            ['from-yellow-400','to-orange-400','🔊'],
-            ['from-purple-500','to-indigo-400','📷'],
-            ['from-blue-400','to-cyan-300','🕶️'],
-            ['from-gray-600','to-gray-800','🧳'],
-            ['from-pink-400','to-red-400','💡'],
-        ];
-        // Duplicate for seamless loop
-        for ($pass = 0; $pass < 2; $pass++): ?>
-        <div class="flex gap-3 px-3">
-          <?php foreach ($tiles as [$from, $to, $emoji]): ?>
-          <div class="w-28 h-28 rounded-xl bg-gradient-to-br <?= $from ?> <?= $to ?> flex items-center justify-center text-3xl flex-shrink-0">
-            <?= $emoji ?>
-          </div>
-          <?php endforeach; ?>
-        </div>
-        <?php endfor; ?>
-      </div>
-    </section>
-
     <!-- Categorías -->
-    <section class="py-4 px-4">
-      <h3 class="font-bold text-lg mb-3">Categorías</h3>
-      <div class="categories-scroll flex gap-2 overflow-x-auto pb-2" id="categories-bar">
+    <section class="pt-4 pb-2 px-4">
+      <h3 class="font-bold text-sm text-gray-500 uppercase tracking-wide mb-2">Categorías</h3>
+      <div class="categories-scroll flex gap-2 overflow-x-auto pb-1" id="categories-bar">
         <?php foreach ($categories as $cat): ?>
         <button
           onclick="filterCategory('<?= htmlspecialchars($cat['id']) ?>')"
@@ -136,7 +95,15 @@ $categoryEmoji = [
       </div>
     </section>
 
-    <!-- Sección destacados (título) -->
+    <!-- Marcas -->
+    <section class="pb-3 px-4">
+      <h3 class="font-bold text-sm text-gray-500 uppercase tracking-wide mb-2">Marcas</h3>
+      <div class="categories-scroll flex gap-2 overflow-x-auto pb-1" id="brands-bar">
+        <!-- generado por JS -->
+      </div>
+    </section>
+
+    <!-- Título grid -->
     <section class="px-4 pb-2">
       <div class="flex items-center justify-between">
         <h3 class="font-bold text-lg">🔥 Productos</h3>
@@ -145,43 +112,58 @@ $categoryEmoji = [
     </section>
 
     <!-- Grid de productos -->
-    <section class="px-4 pb-24" id="products-grid">
+    <section class="px-4 pb-24">
       <div class="grid grid-cols-2 gap-3" id="products-container">
         <?php foreach ($products as $p):
-          $hasImg    = !empty($p['images']);
-          $mainImg   = $hasImg ? $p['images'][0] : null;
-          $emoji     = $categoryEmoji[$p['category']] ?? '📦';
-          $discount  = $p['discount'];
+          $hasImg   = !empty($p['images']);
+          $emoji    = $categoryEmoji[$p['category']] ?? '📦';
+          $discount = $p['discount'];
           $showBadge = $discount >= 10;
         ?>
         <div
           class="product-card bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative fade-in"
           data-category="<?= htmlspecialchars($p['category']) ?>"
-          data-id="<?= $p['id'] ?>">
+          data-brand="<?= htmlspecialchars($p['brand']) ?>"
+          data-id="<?= $p['id'] ?>"
+          onclick="openModal(<?= $p['id'] ?>)">
 
-          <!-- Badges -->
-          <div class="absolute top-2 left-2 flex flex-col gap-1 z-10">
-            <?php if ($p['brand'] === 'Apple'): ?>
+          <!-- Badge Apple -->
+          <?php if ($p['brand'] === 'Apple'): ?>
+          <div class="absolute top-2 left-2 z-10">
             <span class="bg-navy text-white text-[10px] font-bold px-2 py-0.5 rounded-full">🍎 Apple</span>
-            <?php endif; ?>
           </div>
+          <?php endif; ?>
 
+          <!-- Badge descuento -->
           <?php if ($showBadge): ?>
           <div class="absolute top-2 right-2 z-10">
             <span class="bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">−<?= $discount ?>%</span>
           </div>
           <?php endif; ?>
 
-          <!-- Imagen o emoji -->
-          <div class="w-full aspect-square rounded-xl overflow-hidden flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 mb-2">
-            <?php if ($hasImg): ?>
-            <img
-              src="<?= htmlspecialchars($mainImg) ?>"
-              alt="<?= htmlspecialchars($p['name']) ?>"
-              class="w-full h-full object-cover"
-              loading="lazy">
-            <?php else: ?>
-            <span class="text-4xl"><?= $emoji ?></span>
+          <!-- Carrusel de imágenes -->
+          <div class="card-img-wrap relative w-full aspect-square rounded-xl overflow-hidden mb-2 bg-gradient-to-br from-gray-50 to-gray-100">
+            <div class="card-slides flex h-full w-full">
+              <?php if ($hasImg): ?>
+                <?php foreach ($p['images'] as $imgSrc): ?>
+                <img
+                  src="<?= htmlspecialchars($imgSrc) ?>"
+                  alt="<?= htmlspecialchars($p['name']) ?>"
+                  class="flex-shrink-0 w-full h-full object-cover"
+                  loading="lazy">
+                <?php endforeach; ?>
+              <?php else: ?>
+                <div class="flex-shrink-0 w-full h-full flex items-center justify-center text-4xl">
+                  <?= $emoji ?>
+                </div>
+              <?php endif; ?>
+            </div>
+            <?php if (count($p['images']) > 1): ?>
+            <div class="absolute bottom-1.5 left-0 right-0 flex justify-center gap-1 pointer-events-none">
+              <?php foreach ($p['images'] as $i => $_): ?>
+              <span class="slide-dot w-1.5 h-1.5 rounded-full <?= $i === 0 ? 'bg-white' : 'bg-white/40' ?>"></span>
+              <?php endforeach; ?>
+            </div>
             <?php endif; ?>
           </div>
 
@@ -195,7 +177,7 @@ $categoryEmoji = [
           <p class="text-usared font-bold text-sm mb-2"><?= fmt($p['price']) ?></p>
 
           <button
-            onclick="addToCart(<?= $p['id'] ?>)"
+            onclick="addToCart(<?= $p['id'] ?>); event.stopPropagation();"
             class="w-full bg-navy text-white text-xs font-semibold py-2 rounded-lg flex items-center justify-center gap-1 active:bg-usablue transition">
             <i data-lucide="plus" class="w-3 h-3"></i> Agregar
           </button>
@@ -215,7 +197,7 @@ $categoryEmoji = [
         <button onclick="toggleCart()" class="p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <div id="cart-items" class="flex-1 overflow-auto p-4">
-        <p id="cart-empty" class="text-center text-gray-400 py-8">Tu carrito está vacío</p>
+        <p class="text-center text-gray-400 py-8">Tu carrito está vacío</p>
       </div>
       <div id="cart-footer" class="p-4 border-t hidden">
         <div class="flex justify-between mb-3">
@@ -232,6 +214,59 @@ $categoryEmoji = [
     </div>
   </div>
 
+  <!-- ── Modal detalle de producto ────────────────── -->
+  <div id="product-modal" class="fixed inset-0 z-[200] hidden">
+    <div class="absolute inset-0 bg-black/60" onclick="closeModal()"></div>
+    <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl max-h-[92%] flex flex-col slide-up">
+
+      <!-- Cabecera modal -->
+      <div class="flex items-center justify-between px-4 pt-4 pb-2 flex-shrink-0">
+        <span id="modal-category-badge" class="text-xs font-semibold text-gray-400 uppercase tracking-wide"></span>
+        <button onclick="closeModal()" class="p-2 bg-gray-100 rounded-full">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Galería principal -->
+      <div class="px-4 flex-shrink-0">
+        <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-gray-50">
+          <img id="modal-main-img" src="" alt="" class="modal-main-img w-full h-full object-cover">
+          <div id="modal-emoji-fallback" class="hidden w-full h-full items-center justify-center text-6xl absolute inset-0 bg-gray-50">
+          </div>
+          <!-- Flechas -->
+          <button id="modal-prev" onclick="modalNav(-1)"
+            class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 text-white w-8 h-8 rounded-full flex items-center justify-center hidden">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          </button>
+          <button id="modal-next" onclick="modalNav(1)"
+            class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 text-white w-8 h-8 rounded-full flex items-center justify-center hidden">
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+          <!-- Dots -->
+          <div id="modal-dots" class="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 pointer-events-none"></div>
+        </div>
+        <!-- Thumbnails -->
+        <div id="modal-thumbs" class="flex gap-2 mt-2 overflow-x-auto pb-1"></div>
+      </div>
+
+      <!-- Info del producto -->
+      <div class="flex-1 overflow-auto px-4 pt-3 pb-6">
+        <h2 id="modal-name" class="font-bold text-base leading-snug mb-1"></h2>
+        <p id="modal-meta" class="text-xs text-gray-500 mb-3"></p>
+
+        <div id="modal-prices" class="flex items-center gap-3 mb-4"></div>
+
+        <p id="modal-desc" class="text-xs text-gray-600 leading-relaxed mb-5"></p>
+
+        <button id="modal-add-btn"
+          class="w-full bg-navy text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 active:bg-usablue transition">
+          <i data-lucide="plus" class="w-4 h-4"></i> Agregar al carrito
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ── WhatsApp float ────────────────────────────── -->
   <a
     href="https://wa.me/17865683345?text=<?= urlencode('¡Hola! Vi sus productos importados de USA y me gustaría saber más 🇺🇸') ?>"
@@ -243,9 +278,9 @@ $categoryEmoji = [
     </svg>
   </a>
 
-</div>
+</div><!-- /#app -->
 
-<!-- Datos de productos para JS del carrito -->
+<!-- Datos de productos -->
 <script>
 window.catalogProducts = <?= json_encode($products, JSON_UNESCAPED_UNICODE) ?>;
 </script>
@@ -253,45 +288,97 @@ window.catalogProducts = <?= json_encode($products, JSON_UNESCAPED_UNICODE) ?>;
 <script>
 const WHATSAPP_NUMBER = '17865683345';
 
-let cart = [];
+let cart          = [];
 let activeCategory = 'all';
+let activeBrand    = 'all';
 
+// ── Formato de precio ────────────────────────────
 function fmt(n) {
-  return '$' + n.toLocaleString('es-CO');
+  return '$' + Number(n).toLocaleString('es-CO');
 }
 
-// Filtro de categorías
+// ── Emoji por categoría ──────────────────────────
+function getEmoji(cat) {
+  return {celulares:'📱',audifonos:'🎧',tablets:'📲',consolas:'🎮',
+          parlantes:'🔊',cargadores:'🔋',camaras:'📷',iluminacion:'💡',
+          gafas:'🕶️',apple:'🍎',otros:'📦'}[cat] || '📦';
+}
+
+// ── Carrusel en tarjetas ─────────────────────────
+function initCardSlideshows() {
+  document.querySelectorAll('.card-img-wrap').forEach(wrap => {
+    const track = wrap.querySelector('.card-slides');
+    const dots  = wrap.querySelectorAll('.slide-dot');
+    const count = track.children.length;
+    if (count <= 1) return;
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % count;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach((d, i) => {
+        d.style.opacity = i === idx ? '1' : '0.4';
+      });
+    }, 2800);
+  });
+}
+
+// ── Filtros ──────────────────────────────────────
+function applyFilters() {
+  document.querySelectorAll('[data-category]').forEach(card => {
+    const catOk   = activeCategory === 'all' || card.dataset.category === activeCategory;
+    const brandOk = activeBrand   === 'all' || card.dataset.brand     === activeBrand;
+    card.style.display = (catOk && brandOk) ? '' : 'none';
+  });
+}
+
 function filterCategory(id) {
   activeCategory = id;
-
-  // Actualizar pills
   document.querySelectorAll('[data-cat]').forEach(btn => {
-    const active = btn.dataset.cat === id;
-    btn.className = btn.className
-      .replace(/bg-usared text-white|bg-gray-100 text-navy/g, '').trim();
-    btn.classList.add(active ? 'bg-usared' : 'bg-gray-100');
-    btn.classList.add(active ? 'text-white' : 'text-navy');
+    const on = btn.dataset.cat === id;
+    btn.classList.toggle('bg-usared',   on);
+    btn.classList.toggle('text-white',  on);
+    btn.classList.toggle('bg-gray-100', !on);
+    btn.classList.toggle('text-navy',   !on);
   });
-
-  // Mostrar/ocultar tarjetas
-  document.querySelectorAll('[data-category]').forEach(card => {
-    const show = id === 'all' || card.dataset.category === id;
-    card.style.display = show ? '' : 'none';
-  });
+  applyFilters();
 }
 
-// Carrito
+function filterBrand(brand) {
+  activeBrand = brand;
+  document.querySelectorAll('[data-brand-btn]').forEach(btn => {
+    const on = btn.dataset.brandBtn === brand;
+    btn.classList.toggle('bg-usablue',  on);
+    btn.classList.toggle('text-white',  on);
+    btn.classList.toggle('bg-gray-100', !on);
+    btn.classList.toggle('text-navy',   !on);
+  });
+  applyFilters();
+}
+
+function buildBrandsBar() {
+  const raw    = window.catalogProducts.map(p => p.brand).filter(Boolean);
+  const brands = ['all', ...[...new Set(raw)].sort()];
+  const bar    = document.getElementById('brands-bar');
+  bar.innerHTML = brands.map(b => {
+    const isAll = b === 'all';
+    const on    = isAll;
+    return `<button
+      onclick="filterBrand('${b.replace(/'/g, "\\'")}')"
+      data-brand-btn="${b.replace(/"/g, '&quot;')}"
+      class="category-pill flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap
+             ${on ? 'bg-usablue text-white' : 'bg-gray-100 text-navy'}">
+      ${isAll ? '🏷️ Todas' : b}
+    </button>`;
+  }).join('');
+}
+
+// ── Carrito ──────────────────────────────────────
 function addToCart(productId) {
   const p = window.catalogProducts.find(x => x.id === productId);
   if (!p) return;
-
   const existing = cart.find(x => x.id === productId);
-  if (existing) {
-    existing.qty++;
-  } else {
-    cart.push({ ...p, qty: 1 });
-  }
-
+  if (existing) existing.qty++;
+  else cart.push({ ...p, qty: 1 });
   updateCartBadge();
 
   const btn = event.target.closest('button');
@@ -308,30 +395,23 @@ function addToCart(productId) {
 function updateCartBadge() {
   const count = cart.reduce((s, i) => s + i.qty, 0);
   const badge = document.getElementById('cart-count');
-  if (count > 0) {
-    badge.textContent = count;
-    badge.classList.remove('hidden');
-  } else {
-    badge.classList.add('hidden');
-  }
+  badge.textContent = count;
+  badge.classList.toggle('hidden', count === 0);
 }
 
 function toggleCart() {
-  const overlay = document.getElementById('cart-overlay');
-  overlay.classList.toggle('hidden');
+  document.getElementById('cart-overlay').classList.toggle('hidden');
   renderCart();
 }
 
 function renderCart() {
   const itemsEl  = document.getElementById('cart-items');
   const footerEl = document.getElementById('cart-footer');
-
   if (cart.length === 0) {
     itemsEl.innerHTML = '<p class="text-center text-gray-400 py-8">Tu carrito está vacío</p>';
     footerEl.classList.add('hidden');
     return;
   }
-
   footerEl.classList.remove('hidden');
   itemsEl.innerHTML = cart.map(item => `
     <div class="flex items-center gap-3 py-3 border-b">
@@ -351,9 +431,7 @@ function renderCart() {
       </div>
     </div>
   `).join('');
-
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  document.getElementById('cart-total').textContent = fmt(total);
+  document.getElementById('cart-total').textContent = fmt(cart.reduce((s, i) => s + i.price * i.qty, 0));
 }
 
 function changeQty(id, delta) {
@@ -367,24 +445,144 @@ function changeQty(id, delta) {
 
 function sendWhatsApp() {
   let msg = '¡Hola! 👋 Me interesan estos productos:\n\n';
-  cart.forEach(item => {
-    msg += `• ${item.name} x${item.qty} — ${fmt(item.price * item.qty)}\n`;
-  });
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  msg += `\n💰 Total: ${fmt(total)}\n\n¿Están disponibles?`;
+  cart.forEach(item => { msg += `• ${item.name} x${item.qty} — ${fmt(item.price * item.qty)}\n`; });
+  msg += `\n💰 Total: ${fmt(cart.reduce((s, i) => s + i.price * i.qty, 0))}\n\n¿Están disponibles?`;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
-function getEmoji(category) {
-  const map = {
-    celulares: '📱', audifonos: '🎧', tablets: '📲',
-    consolas: '🎮', parlantes: '🔊', cargadores: '🔋',
-    camaras: '📷', iluminacion: '💡', gafas: '🕶️',
-    apple: '🍎', otros: '📦'
+// ── Modal de detalle ─────────────────────────────
+let currentProduct = null;
+let modalImgIdx    = 0;
+
+function openModal(id) {
+  const p = window.catalogProducts.find(x => x.id === id);
+  if (!p) return;
+  currentProduct = p;
+  modalImgIdx    = 0;
+
+  // Categoría
+  document.getElementById('modal-category-badge').textContent = p.brand || '';
+
+  // Nombre
+  document.getElementById('modal-name').textContent = p.name;
+
+  // Meta (marca · capacidad)
+  const parts = [p.brand, p.capacity].filter(Boolean);
+  document.getElementById('modal-meta').textContent = parts.join(' · ');
+
+  // Precios
+  const pricesEl = document.getElementById('modal-prices');
+  let pricesHtml = `<span class="text-usared font-bold text-xl">${fmt(p.price)}</span>`;
+  if (p.market_price && p.market_price > p.price) {
+    pricesHtml += `<span class="text-gray-400 text-sm line-through">${fmt(p.market_price)}</span>`;
+    if (p.discount >= 5) {
+      pricesHtml += `<span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">−${p.discount}%</span>`;
+    }
+  }
+  pricesEl.innerHTML = pricesHtml;
+
+  // Descripción
+  document.getElementById('modal-desc').textContent = p.description || '';
+
+  // Galería
+  renderModalGallery();
+
+  // Botón agregar
+  const addBtn = document.getElementById('modal-add-btn');
+  addBtn.onclick = () => {
+    const fakeEvent = { target: addBtn };
+    const origEvent = window.event;
+    // Simula addToCart sin el event.stopPropagation problemático
+    const existing = cart.find(x => x.id === p.id);
+    if (existing) existing.qty++;
+    else cart.push({ ...p, qty: 1 });
+    updateCartBadge();
+    addBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> Agregado';
+    addBtn.classList.add('bg-green-600');
+    lucide.createIcons();
+    setTimeout(() => {
+      addBtn.innerHTML = '<i data-lucide="plus" class="w-4 h-4"></i> Agregar al carrito';
+      addBtn.classList.remove('bg-green-600');
+      lucide.createIcons();
+    }, 1000);
   };
-  return map[category] || '📦';
+
+  document.getElementById('product-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  lucide.createIcons();
 }
 
+function renderModalGallery() {
+  const p      = currentProduct;
+  const hasImg = p.images && p.images.length > 0;
+
+  // Imagen principal
+  const mainImg    = document.getElementById('modal-main-img');
+  const emojiFall  = document.getElementById('modal-emoji-fallback');
+
+  if (hasImg) {
+    mainImg.src = p.images[modalImgIdx];
+    mainImg.alt = p.name;
+    mainImg.classList.remove('hidden');
+    emojiFall.classList.add('hidden');
+    emojiFall.classList.remove('flex');
+  } else {
+    mainImg.classList.add('hidden');
+    emojiFall.innerHTML = getEmoji(p.category);
+    emojiFall.classList.remove('hidden');
+    emojiFall.classList.add('flex');
+  }
+
+  // Flechas
+  const showArrows = hasImg && p.images.length > 1;
+  document.getElementById('modal-prev').classList.toggle('hidden', !showArrows);
+  document.getElementById('modal-next').classList.toggle('hidden', !showArrows);
+
+  // Dots
+  const dotsEl = document.getElementById('modal-dots');
+  if (hasImg && p.images.length > 1) {
+    dotsEl.innerHTML = p.images.map((_, i) =>
+      `<span class="w-2 h-2 rounded-full ${i === modalImgIdx ? 'bg-white' : 'bg-white/40'}"></span>`
+    ).join('');
+  } else {
+    dotsEl.innerHTML = '';
+  }
+
+  // Thumbnails
+  const thumbsEl = document.getElementById('modal-thumbs');
+  if (hasImg && p.images.length > 1) {
+    thumbsEl.innerHTML = p.images.map((src, i) => `
+      <button onclick="setModalImg(${i})"
+        class="flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 transition
+               ${i === modalImgIdx ? 'border-usared' : 'border-transparent opacity-60'}">
+        <img src="${src}" class="w-full h-full object-cover" loading="lazy">
+      </button>
+    `).join('');
+  } else {
+    thumbsEl.innerHTML = '';
+  }
+}
+
+function setModalImg(idx) {
+  modalImgIdx = idx;
+  renderModalGallery();
+}
+
+function modalNav(dir) {
+  const len = currentProduct.images.length;
+  modalImgIdx = (modalImgIdx + dir + len) % len;
+  renderModalGallery();
+}
+
+function closeModal() {
+  document.getElementById('product-modal').classList.add('hidden');
+  document.body.style.overflow = '';
+  currentProduct = null;
+}
+
+// ── Init ─────────────────────────────────────────
+buildBrandsBar();
+initCardSlideshows();
 lucide.createIcons();
 </script>
 </body>
