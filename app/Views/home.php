@@ -38,7 +38,16 @@
     .slide-up { animation: slideUp 0.35s ease; }
     @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     .card-slides { transition: transform 0.5s ease; }
-    .modal-main-img { transition: opacity 0.25s ease; }
+    /* Modal: controlado por clase .open en lugar de .hidden */
+    #product-modal { display: none; }
+    #product-modal.open {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    @media (min-width: 768px) {
+      #product-modal.open { align-items: center; }
+    }
   </style>
 </head>
 <body class="h-full bg-white font-body text-navy overflow-auto">
@@ -95,15 +104,13 @@ $categoryEmoji = [
       </div>
     </section>
 
-    <!-- Marcas -->
-    <section class="pb-3 px-4">
+    <!-- Marcas (oculto por defecto, visible al seleccionar una categoría con ≥2 marcas) -->
+    <section id="brands-section" class="pb-3 px-4 hidden">
       <h3 class="font-bold text-sm text-gray-500 uppercase tracking-wide mb-2">Marcas</h3>
-      <div class="categories-scroll flex gap-2 overflow-x-auto pb-1" id="brands-bar">
-        <!-- generado por JS -->
-      </div>
+      <div class="categories-scroll flex gap-2 overflow-x-auto pb-1" id="brands-bar"></div>
     </section>
 
-    <!-- Título grid -->
+    <!-- Título -->
     <section class="px-4 pb-2">
       <div class="flex items-center justify-between">
         <h3 class="font-bold text-lg">🔥 Productos</h3>
@@ -111,13 +118,13 @@ $categoryEmoji = [
       </div>
     </section>
 
-    <!-- Grid de productos -->
+    <!-- Grid de productos — responsivo -->
     <section class="px-4 pb-24">
-      <div class="grid grid-cols-2 gap-3" id="products-container">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3" id="products-container">
         <?php foreach ($products as $p):
-          $hasImg   = !empty($p['images']);
-          $emoji    = $categoryEmoji[$p['category']] ?? '📦';
-          $discount = $p['discount'];
+          $hasImg    = !empty($p['images']);
+          $emoji     = $categoryEmoji[$p['category']] ?? '📦';
+          $discount  = $p['discount'];
           $showBadge = $discount >= 10;
         ?>
         <div
@@ -167,7 +174,7 @@ $categoryEmoji = [
             <?php endif; ?>
           </div>
 
-          <!-- Info -->
+          <!-- Info tarjeta -->
           <h4 class="font-semibold text-xs leading-tight mb-1 line-clamp-2"><?= htmlspecialchars($p['name']) ?></h4>
 
           <?php if ($p['market_price'] !== null && $p['market_price'] > $p['price']): ?>
@@ -215,53 +222,105 @@ $categoryEmoji = [
   </div>
 
   <!-- ── Modal detalle de producto ────────────────── -->
-  <div id="product-modal" class="fixed inset-0 z-[200] hidden">
+  <div id="product-modal" class="fixed inset-0 z-[200]">
     <div class="absolute inset-0 bg-black/60" onclick="closeModal()"></div>
-    <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl max-h-[92%] flex flex-col slide-up">
 
-      <!-- Cabecera modal -->
-      <div class="flex items-center justify-between px-4 pt-4 pb-2 flex-shrink-0">
-        <span id="modal-category-badge" class="text-xs font-semibold text-gray-400 uppercase tracking-wide"></span>
-        <button onclick="closeModal()" class="p-2 bg-gray-100 rounded-full">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-      </div>
+    <!-- Panel: bottom-sheet mobile / diálogo centrado desktop -->
+    <div id="modal-panel"
+      class="relative z-10 bg-white w-full rounded-t-3xl
+             md:rounded-2xl md:max-w-4xl md:w-[92%]
+             max-h-[92vh] md:max-h-[88vh]
+             flex flex-col md:flex-row overflow-hidden slide-up">
 
-      <!-- Galería principal -->
-      <div class="px-4 flex-shrink-0">
-        <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-gray-50">
-          <img id="modal-main-img" src="" alt="" class="modal-main-img w-full h-full object-cover">
-          <div id="modal-emoji-fallback" class="hidden w-full h-full items-center justify-center text-6xl absolute inset-0 bg-gray-50">
+      <!-- ── Columna izquierda: galería ───────────── -->
+      <div class="md:w-[42%] md:flex-shrink-0 flex flex-col md:border-r md:border-gray-100">
+
+        <!-- Cabecera mobile -->
+        <div class="flex items-center justify-between px-4 pt-4 pb-2 flex-shrink-0 md:hidden">
+          <span id="modal-brand-badge" class="text-xs font-bold text-usablue uppercase tracking-wide"></span>
+          <button onclick="closeModal()" class="p-2 bg-gray-100 rounded-full">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Imagen principal -->
+        <div class="relative mx-4 md:mx-0 rounded-2xl md:rounded-none overflow-hidden bg-gray-50
+                    aspect-square md:aspect-auto md:flex-1">
+          <img id="modal-main-img" src="" alt=""
+            class="w-full h-full object-cover">
+          <div id="modal-emoji-fallback"
+            class="hidden absolute inset-0 bg-gray-50 items-center justify-center text-6xl">
           </div>
           <!-- Flechas -->
           <button id="modal-prev" onclick="modalNav(-1)"
-            class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 text-white w-8 h-8 rounded-full flex items-center justify-center hidden">
-            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 text-white w-9 h-9 rounded-full
+                   flex items-center justify-center hidden hover:bg-black/50 transition">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
           </button>
           <button id="modal-next" onclick="modalNav(1)"
-            class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 text-white w-8 h-8 rounded-full flex items-center justify-center hidden">
-            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 text-white w-9 h-9 rounded-full
+                   flex items-center justify-center hidden hover:bg-black/50 transition">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
           </button>
           <!-- Dots -->
-          <div id="modal-dots" class="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 pointer-events-none"></div>
+          <div id="modal-dots"
+            class="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 pointer-events-none">
+          </div>
         </div>
+
         <!-- Thumbnails -->
-        <div id="modal-thumbs" class="flex gap-2 mt-2 overflow-x-auto pb-1"></div>
+        <div id="modal-thumbs"
+          class="flex gap-2 px-4 py-3 overflow-x-auto flex-shrink-0">
+        </div>
       </div>
 
-      <!-- Info del producto -->
-      <div class="flex-1 overflow-auto px-4 pt-3 pb-6">
-        <h2 id="modal-name" class="font-bold text-base leading-snug mb-1"></h2>
-        <p id="modal-meta" class="text-xs text-gray-500 mb-3"></p>
+      <!-- ── Columna derecha: información ─────────── -->
+      <div class="flex-1 flex flex-col overflow-hidden">
 
-        <div id="modal-prices" class="flex items-center gap-3 mb-4"></div>
+        <!-- Cabecera desktop -->
+        <div class="hidden md:flex items-center justify-between px-6 pt-5 pb-3 flex-shrink-0">
+          <span id="modal-brand-badge-desk"
+            class="text-sm font-bold text-usablue uppercase tracking-wide"></span>
+          <button onclick="closeModal()"
+            class="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
 
-        <p id="modal-desc" class="text-xs text-gray-600 leading-relaxed mb-5"></p>
+        <!-- Contenido scrollable -->
+        <div class="flex-1 overflow-y-auto px-4 md:px-6 pb-6 pt-3 md:pt-0">
 
-        <button id="modal-add-btn"
-          class="w-full bg-navy text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 active:bg-usablue transition">
-          <i data-lucide="plus" class="w-4 h-4"></i> Agregar al carrito
-        </button>
+          <!-- Nombre -->
+          <h2 id="modal-name" class="font-bold text-xl leading-snug mb-0.5"></h2>
+
+          <!-- Modelo (si distinto del nombre) -->
+          <p id="modal-model" class="text-sm text-gray-500 mb-1"></p>
+
+          <!-- Marca · Capacidad -->
+          <p id="modal-meta" class="text-xs text-gray-400 mb-5"></p>
+
+          <!-- Precios -->
+          <div class="mb-2">
+            <div id="modal-prices" class="flex flex-wrap items-end gap-2 mb-1"></div>
+            <p id="modal-usd" class="text-xs text-gray-400"></p>
+          </div>
+
+          <!-- Stock -->
+          <div id="modal-stock" class="flex items-center gap-1.5 text-xs font-semibold mt-3 mb-5"></div>
+
+          <hr class="mb-5 border-gray-100">
+
+          <!-- Descripción -->
+          <p id="modal-desc" class="text-sm text-gray-600 leading-relaxed mb-6"></p>
+
+          <!-- Botón agregar -->
+          <button id="modal-add-btn"
+            class="w-full bg-navy text-white font-bold py-3.5 rounded-xl
+                   flex items-center justify-center gap-2 active:bg-usablue transition text-sm">
+            <i data-lucide="plus" class="w-4 h-4"></i> Agregar al carrito
+          </button>
+
+        </div>
       </div>
 
     </div>
@@ -272,7 +331,8 @@ $categoryEmoji = [
     href="https://wa.me/17865683345?text=<?= urlencode('¡Hola! Vi sus productos importados de USA y me gustaría saber más 🇺🇸') ?>"
     target="_blank"
     rel="noopener noreferrer"
-    class="fixed bottom-5 right-5 z-50 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition">
+    class="fixed bottom-5 right-5 z-50 bg-green-500 text-white w-14 h-14 rounded-full
+           flex items-center justify-center shadow-lg hover:scale-110 transition">
     <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492l4.625-1.467A11.932 11.932 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-2.17 0-4.207-.58-5.963-1.588l-.428-.254-2.742.87.885-2.666-.279-.442A9.722 9.722 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z"/>
     </svg>
@@ -280,7 +340,6 @@ $categoryEmoji = [
 
 </div><!-- /#app -->
 
-<!-- Datos de productos -->
 <script>
 window.catalogProducts = <?= json_encode($products, JSON_UNESCAPED_UNICODE) ?>;
 </script>
@@ -288,16 +347,15 @@ window.catalogProducts = <?= json_encode($products, JSON_UNESCAPED_UNICODE) ?>;
 <script>
 const WHATSAPP_NUMBER = '17865683345';
 
-let cart          = [];
+let cart           = [];
 let activeCategory = 'all';
 let activeBrand    = 'all';
 
-// ── Formato de precio ────────────────────────────
+// ── Utilidades ───────────────────────────────────
 function fmt(n) {
   return '$' + Number(n).toLocaleString('es-CO');
 }
 
-// ── Emoji por categoría ──────────────────────────
 function getEmoji(cat) {
   return {celulares:'📱',audifonos:'🎧',tablets:'📲',consolas:'🎮',
           parlantes:'🔊',cargadores:'🔋',camaras:'📷',iluminacion:'💡',
@@ -315,9 +373,7 @@ function initCardSlideshows() {
     setInterval(() => {
       idx = (idx + 1) % count;
       track.style.transform = `translateX(-${idx * 100}%)`;
-      dots.forEach((d, i) => {
-        d.style.opacity = i === idx ? '1' : '0.4';
-      });
+      dots.forEach((d, i) => { d.style.opacity = i === idx ? '1' : '0.4'; });
     }, 2800);
   });
 }
@@ -333,6 +389,8 @@ function applyFilters() {
 
 function filterCategory(id) {
   activeCategory = id;
+  activeBrand    = 'all';
+
   document.querySelectorAll('[data-cat]').forEach(btn => {
     const on = btn.dataset.cat === id;
     btn.classList.toggle('bg-usared',   on);
@@ -340,6 +398,8 @@ function filterCategory(id) {
     btn.classList.toggle('bg-gray-100', !on);
     btn.classList.toggle('text-navy',   !on);
   });
+
+  buildBrandsBar(id);
   applyFilters();
 }
 
@@ -355,13 +415,27 @@ function filterBrand(brand) {
   applyFilters();
 }
 
-function buildBrandsBar() {
-  const raw    = window.catalogProducts.map(p => p.brand).filter(Boolean);
-  const brands = ['all', ...[...new Set(raw)].sort()];
-  const bar    = document.getElementById('brands-bar');
-  bar.innerHTML = brands.map(b => {
+function buildBrandsBar(categoryId) {
+  const section = document.getElementById('brands-section');
+
+  if (categoryId === 'all') {
+    section.classList.add('hidden');
+    return;
+  }
+
+  const inCat  = window.catalogProducts.filter(p => p.category === categoryId);
+  const brands = [...new Set(inCat.map(p => p.brand).filter(Boolean))].sort();
+
+  if (brands.length <= 1) {
+    section.classList.add('hidden');
+    return;
+  }
+
+  section.classList.remove('hidden');
+  const bar = document.getElementById('brands-bar');
+  bar.innerHTML = ['all', ...brands].map(b => {
     const isAll = b === 'all';
-    const on    = isAll;
+    const on    = isAll; // siempre arranca en "Todas" al cambiar categoría
     return `<button
       onclick="filterBrand('${b.replace(/'/g, "\\'")}')"
       data-brand-btn="${b.replace(/"/g, '&quot;')}"
@@ -425,9 +499,11 @@ function renderCart() {
         <p class="text-xs text-usared font-bold">${fmt(item.price)}</p>
       </div>
       <div class="flex items-center gap-2">
-        <button onclick="changeQty(${item.id}, -1)" class="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center text-sm font-bold">−</button>
+        <button onclick="changeQty(${item.id}, -1)"
+          class="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center text-sm font-bold">−</button>
         <span class="text-sm font-semibold w-4 text-center">${item.qty}</span>
-        <button onclick="changeQty(${item.id}, 1)" class="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center text-sm font-bold">+</button>
+        <button onclick="changeQty(${item.id}, 1)"
+          class="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center text-sm font-bold">+</button>
       </div>
     </div>
   `).join('');
@@ -445,7 +521,7 @@ function changeQty(id, delta) {
 
 function sendWhatsApp() {
   let msg = '¡Hola! 👋 Me interesan estos productos:\n\n';
-  cart.forEach(item => { msg += `• ${item.name} x${item.qty} — ${fmt(item.price * item.qty)}\n`; });
+  cart.forEach(i => { msg += `• ${i.name} x${i.qty} — ${fmt(i.price * i.qty)}\n`; });
   msg += `\n💰 Total: ${fmt(cart.reduce((s, i) => s + i.price * i.qty, 0))}\n\n¿Están disponibles?`;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
 }
@@ -460,39 +536,63 @@ function openModal(id) {
   currentProduct = p;
   modalImgIdx    = 0;
 
-  // Categoría
-  document.getElementById('modal-category-badge').textContent = p.brand || '';
+  // Marca (ambos badges: mobile y desktop)
+  const brandText = p.brand || '';
+  document.getElementById('modal-brand-badge').textContent      = brandText;
+  document.getElementById('modal-brand-badge-desk').textContent = brandText;
 
   // Nombre
   document.getElementById('modal-name').textContent = p.name;
 
-  // Meta (marca · capacidad)
+  // Modelo (solo si es distinto del nombre y tiene valor)
+  const modelEl  = document.getElementById('modal-model');
+  const modelVal = (p.model && p.model !== p.name) ? p.model : '';
+  modelEl.textContent = modelVal;
+  modelEl.classList.toggle('hidden', !modelVal);
+
+  // Marca · Capacidad
   const parts = [p.brand, p.capacity].filter(Boolean);
   document.getElementById('modal-meta').textContent = parts.join(' · ');
 
   // Precios
   const pricesEl = document.getElementById('modal-prices');
-  let pricesHtml = `<span class="text-usared font-bold text-xl">${fmt(p.price)}</span>`;
+  let ph = `<span class="text-usared font-bold text-2xl">${fmt(p.price)}</span>`;
   if (p.market_price && p.market_price > p.price) {
-    pricesHtml += `<span class="text-gray-400 text-sm line-through">${fmt(p.market_price)}</span>`;
+    ph += `<span class="text-gray-400 text-base line-through">${fmt(p.market_price)}</span>`;
     if (p.discount >= 5) {
-      pricesHtml += `<span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">−${p.discount}%</span>`;
+      ph += `<span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded-full">−${p.discount}%</span>`;
     }
   }
-  pricesEl.innerHTML = pricesHtml;
+  pricesEl.innerHTML = ph;
+
+  // Precio USD
+  const usdEl = document.getElementById('modal-usd');
+  if (p.price_usd) {
+    usdEl.textContent = `Precio referencia: USD $${p.price_usd}`;
+    usdEl.classList.remove('hidden');
+  } else {
+    usdEl.classList.add('hidden');
+  }
+
+  // Stock
+  const stockEl = document.getElementById('modal-stock');
+  if (p.stock > 0) {
+    stockEl.innerHTML =
+      `<span class="w-2 h-2 rounded-full bg-green-500 inline-block flex-shrink-0"></span>
+       <span class="text-green-700">En stock</span>
+       <span class="text-gray-400 font-normal">· ${p.stock} ${p.stock === 1 ? 'unidad' : 'unidades'} disponibles</span>`;
+  } else {
+    stockEl.innerHTML =
+      `<span class="w-2 h-2 rounded-full bg-red-400 inline-block flex-shrink-0"></span>
+       <span class="text-red-600">Sin stock</span>`;
+  }
 
   // Descripción
   document.getElementById('modal-desc').textContent = p.description || '';
 
-  // Galería
-  renderModalGallery();
-
   // Botón agregar
   const addBtn = document.getElementById('modal-add-btn');
   addBtn.onclick = () => {
-    const fakeEvent = { target: addBtn };
-    const origEvent = window.event;
-    // Simula addToCart sin el event.stopPropagation problemático
     const existing = cart.find(x => x.id === p.id);
     if (existing) existing.qty++;
     else cart.push({ ...p, qty: 1 });
@@ -504,10 +604,12 @@ function openModal(id) {
       addBtn.innerHTML = '<i data-lucide="plus" class="w-4 h-4"></i> Agregar al carrito';
       addBtn.classList.remove('bg-green-600');
       lucide.createIcons();
-    }, 1000);
+    }, 1200);
   };
 
-  document.getElementById('product-modal').classList.remove('hidden');
+  renderModalGallery();
+
+  document.getElementById('product-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
   lucide.createIcons();
 }
@@ -516,16 +618,15 @@ function renderModalGallery() {
   const p      = currentProduct;
   const hasImg = p.images && p.images.length > 0;
 
-  // Imagen principal
-  const mainImg    = document.getElementById('modal-main-img');
-  const emojiFall  = document.getElementById('modal-emoji-fallback');
+  const mainImg   = document.getElementById('modal-main-img');
+  const emojiFall = document.getElementById('modal-emoji-fallback');
 
   if (hasImg) {
     mainImg.src = p.images[modalImgIdx];
     mainImg.alt = p.name;
     mainImg.classList.remove('hidden');
-    emojiFall.classList.add('hidden');
     emojiFall.classList.remove('flex');
+    emojiFall.classList.add('hidden');
   } else {
     mainImg.classList.add('hidden');
     emojiFall.innerHTML = getEmoji(p.category);
@@ -533,34 +634,29 @@ function renderModalGallery() {
     emojiFall.classList.add('flex');
   }
 
-  // Flechas
-  const showArrows = hasImg && p.images.length > 1;
-  document.getElementById('modal-prev').classList.toggle('hidden', !showArrows);
-  document.getElementById('modal-next').classList.toggle('hidden', !showArrows);
+  const multiImg = hasImg && p.images.length > 1;
+  document.getElementById('modal-prev').classList.toggle('hidden', !multiImg);
+  document.getElementById('modal-next').classList.toggle('hidden', !multiImg);
 
   // Dots
   const dotsEl = document.getElementById('modal-dots');
-  if (hasImg && p.images.length > 1) {
-    dotsEl.innerHTML = p.images.map((_, i) =>
-      `<span class="w-2 h-2 rounded-full ${i === modalImgIdx ? 'bg-white' : 'bg-white/40'}"></span>`
-    ).join('');
-  } else {
-    dotsEl.innerHTML = '';
-  }
+  dotsEl.innerHTML = multiImg
+    ? p.images.map((_, i) =>
+        `<span class="w-2 h-2 rounded-full ${i === modalImgIdx ? 'bg-white' : 'bg-white/40'}"></span>`
+      ).join('')
+    : '';
 
   // Thumbnails
   const thumbsEl = document.getElementById('modal-thumbs');
-  if (hasImg && p.images.length > 1) {
-    thumbsEl.innerHTML = p.images.map((src, i) => `
-      <button onclick="setModalImg(${i})"
-        class="flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 transition
-               ${i === modalImgIdx ? 'border-usared' : 'border-transparent opacity-60'}">
-        <img src="${src}" class="w-full h-full object-cover" loading="lazy">
-      </button>
-    `).join('');
-  } else {
-    thumbsEl.innerHTML = '';
-  }
+  thumbsEl.innerHTML = multiImg
+    ? p.images.map((src, i) => `
+        <button onclick="setModalImg(${i})"
+          class="flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 transition
+                 ${i === modalImgIdx ? 'border-usared' : 'border-transparent opacity-50 hover:opacity-80'}">
+          <img src="${src}" class="w-full h-full object-cover" loading="lazy">
+        </button>`
+      ).join('')
+    : '';
 }
 
 function setModalImg(idx) {
@@ -575,13 +671,17 @@ function modalNav(dir) {
 }
 
 function closeModal() {
-  document.getElementById('product-modal').classList.add('hidden');
+  document.getElementById('product-modal').classList.remove('open');
   document.body.style.overflow = '';
   currentProduct = null;
 }
 
+// Cerrar modal con Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
 // ── Init ─────────────────────────────────────────
-buildBrandsBar();
 initCardSlideshows();
 lucide.createIcons();
 </script>

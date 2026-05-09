@@ -50,6 +50,7 @@ class ProductModel
                 'id'           => (int) $p['indice'],
                 'slug'         => $p['slug'],
                 'name'         => $p['nombre_web'],
+                'model'        => $p['modelo']     ?? null,
                 'price'        => $price,
                 'market_price' => $marketPrice,
                 'discount'     => $discount,
@@ -57,6 +58,8 @@ class ProductModel
                 'brand'        => $p['marca'] ?? '',
                 'description'  => $p['descripcion'] ?? '',
                 'capacity'     => $p['capacidad'] ?? '',
+                'stock'        => (int) ($p['cantidad'] ?? 0),
+                'price_usd'    => $p['precio_usd'] ?? null,
                 'images'       => $this->getProductImages((int) $p['indice']),
             ];
         }
