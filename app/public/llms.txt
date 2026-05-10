@@ -1,0 +1,43 @@
+# FromUSA.com.co
+
+> Tienda online de tecnología importada directamente desde Estados Unidos a Colombia. Precios en pesos colombianos (COP). Compra y negociación a través de WhatsApp.
+
+## Descripción del negocio
+
+FromUSA.com.co es una tienda de comercio electrónico ubicada en Colombia que vende tecnología importada directamente desde Estados Unidos. Todos los productos son auténticos, desbloqueados y verificados antes de su venta.
+
+## Categorías de productos
+
+- **Celulares**: Smartphones desbloqueados (Apple iPhone, Samsung Galaxy, Motorola)
+- **Audífonos**: AirPods, JBL, Skullcandy, iLive, SoundMates, Vivitar
+- **Tablets**: iPad de Apple y tablets Android
+- **Consolas**: Nintendo Switch y accesorios
+- **Parlantes Bluetooth**: Parlantes portátiles importados
+- **Cargadores**: Power banks y cargadores de alta capacidad
+- **Cámaras**: Cámaras de seguridad exteriores e interiores, timbres con cámara
+- **Iluminación**: Lámparas solares y luces LED con sensor
+- **Gafas de sol**: Ray-Ban y otras marcas premium
+- **Productos Apple**: Localizadores AirTag y accesorios Apple
+
+## Proceso de compra
+
+Las compras NO se realizan directamente en el sitio web. El proceso es:
+1. El cliente navega el catálogo en fromusa.com.co
+2. Contacta al vendedor por WhatsApp al número +1 (786) 568-3345
+3. Se negocia el precio y los detalles del envío
+4. El pago se coordina directamente con el vendedor
+
+## Información de contacto
+
+- **WhatsApp**: +1 (786) 568-3345 / +17865683345
+- **Sitio web**: https://fromusa.com.co
+- **País**: Colombia (CO)
+- **Moneda**: Pesos colombianos (COP)
+- **Idioma**: Español
+
+## Recursos del sitio
+
+- Catálogo: https://fromusa.com.co/
+- Mapa del sitio: https://fromusa.com.co/sitemap.xml
+- Imagen social: https://fromusa.com.co/og-image.php
+- Robots: https://fromusa.com.co/robots.txt

@@ -1,0 +1,70 @@
+# ─── FromUSA.com.co — robots.txt ───────────────────────────────────────────
+# https://fromusa.com.co/robots.txt
+
+# Regla general: todos los rastreadores pueden indexar todo el sitio
+User-agent: *
+Allow: /
+Crawl-delay: 1
+
+# ── Rastreadores de motores de búsqueda ────────────────────────────────────
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /img/
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# ── Rastreadores de IA ─────────────────────────────────────────────────────
+# OpenAI / ChatGPT
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic / Claude
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Google AI (Gemini, AI Overviews)
+User-agent: Google-Extended
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+# Common Crawl (datasets públicos para entrenamiento de LLMs)
+User-agent: CCBot
+Allow: /
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+
+# ── Sitemap ────────────────────────────────────────────────────────────────
+Sitemap: https://fromusa.com.co/sitemap.xml

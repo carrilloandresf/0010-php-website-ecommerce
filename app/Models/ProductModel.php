@@ -25,7 +25,7 @@ class ProductModel
     {
         $base = dirname(__DIR__, 2);
         $this->dataPath = $base . '/data/inventory.json';
-        $this->imgDir   = $base . '/img/';
+        $this->imgDir   = $base . '/app/public/img/';
     }
 
     public function getProducts(): array

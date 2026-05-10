@@ -30,7 +30,7 @@ class HomeController
     private function getPublicidadImages(): array
     {
         $base  = dirname(__DIR__, 2);
-        $files = glob($base . '/img/publicidad/*.{jpg,jpeg,png,webp}', GLOB_BRACE) ?: [];
+        $files = glob($base . '/app/public/img/publicidad/*.{jpg,jpeg,png,webp}', GLOB_BRACE) ?: [];
         sort($files);
         return array_map(
             fn(string $f): string => '/img/publicidad/' . rawurlencode(basename($f)),

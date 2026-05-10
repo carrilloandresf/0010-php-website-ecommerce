@@ -1,9 +1,131 @@
 <!doctype html>
-<html lang="es" class="h-full">
+<html lang="es" prefix="og: https://ogp.me/ns#" class="h-full">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── SEO primario ──────────────────────────────────────────────────── -->
   <title>FromUSA.com.co — Tecnología importada directo de USA</title>
+  <meta name="description" content="Compra tecnología importada directo de USA: celulares desbloqueados, AirPods, tablets, consolas, parlantes y más. Precios en COP, negociación por WhatsApp.">
+  <meta name="keywords" content="tecnologia importada usa, celulares desbloqueados colombia, iphone colombia, samsung colombia, audifonos importados, tablets colombia, fromusa, comprar tecnologia usa colombia">
+  <meta name="author" content="FromUSA.com.co">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
+  <link rel="canonical" href="https://fromusa.com.co/">
+
+  <!-- ── Open Graph (Facebook, LinkedIn, WhatsApp, Telegram) ────────────── -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://fromusa.com.co/">
+  <meta property="og:site_name"   content="FromUSA.com.co">
+  <meta property="og:locale"      content="es_CO">
+  <meta property="og:title"       content="FromUSA.com.co — Tecnología importada directo de USA">
+  <meta property="og:description" content="Celulares desbloqueados, AirPods, tablets, consolas y más, importados directamente desde Estados Unidos. Negociamos el mejor precio por WhatsApp.">
+  <meta property="og:image"       content="https://fromusa.com.co/og-image.php">
+  <meta property="og:image:secure_url" content="https://fromusa.com.co/og-image.php">
+  <meta property="og:image:type"  content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt"   content="FromUSA.com.co — Tecnología importada desde USA">
+
+  <!-- ── Twitter / X Card ─────────────────────────────────────────────── -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="FromUSA.com.co — Tecnología importada directo de USA">
+  <meta name="twitter:description" content="Celulares, AirPods, tablets y consolas importados de USA. Negociamos por WhatsApp.">
+  <meta name="twitter:image"       content="https://fromusa.com.co/og-image.php">
+  <meta name="twitter:image:alt"   content="FromUSA.com.co">
+
+  <!-- ── PWA / Dispositivos móviles ────────────────────────────────────── -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0A1628">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="FromUSA">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/og-image.php">
+
+  <!-- ── Datos estructurados JSON-LD (Google, Bing, IAs) ───────────────── -->
+<?php
+$siteUrl = 'https://fromusa.com.co';
+$topProducts = array_slice($products, 0, 20);
+$jsonLd = [
+    '@context' => 'https://schema.org',
+    '@graph'   => [
+        [
+            '@type'       => 'Organization',
+            '@id'         => $siteUrl . '/#organization',
+            'name'        => 'FromUSA.com.co',
+            'url'         => $siteUrl,
+            'logo'        => $siteUrl . '/og-image.php',
+            'description' => 'Tienda de tecnología importada directamente desde Estados Unidos a Colombia',
+            'contactPoint' => [
+                '@type'           => 'ContactPoint',
+                'telephone'       => '+17865683345',
+                'contactType'     => 'customer service',
+                'contactOption'   => 'TollFree',
+                'availableLanguage' => 'Spanish',
+            ],
+            'areaServed' => 'CO',
+        ],
+        [
+            '@type'       => 'WebSite',
+            '@id'         => $siteUrl . '/#website',
+            'url'         => $siteUrl,
+            'name'        => 'FromUSA.com.co',
+            'description' => 'Tecnología importada directo de USA al mejor precio en Colombia',
+            'inLanguage'  => 'es-CO',
+            'publisher'   => ['@id' => $siteUrl . '/#organization'],
+        ],
+        [
+            '@type'               => 'Store',
+            '@id'                 => $siteUrl . '/#store',
+            'name'                => 'FromUSA.com.co',
+            'url'                 => $siteUrl,
+            'description'         => 'Tienda de tecnología importada directamente desde Estados Unidos a Colombia',
+            'telephone'           => '+17865683345',
+            'priceRange'          => '$$',
+            'currenciesAccepted'  => 'COP',
+            'paymentAccepted'     => 'WhatsApp',
+            'areaServed'          => ['@type' => 'Country', 'name' => 'Colombia'],
+            'hasOfferCatalog'     => ['@id' => $siteUrl . '/#catalog'],
+        ],
+        [
+            '@type'           => 'OfferCatalog',
+            '@id'             => $siteUrl . '/#catalog',
+            'name'            => 'Catálogo FromUSA',
+            'numberOfItems'   => count($products),
+            'itemListElement' => array_map(static function (array $p, int $i) use ($siteUrl): array {
+                $item = [
+                    '@type'    => 'ListItem',
+                    'position' => $i + 1,
+                    'item'     => [
+                        '@type'       => 'Product',
+                        'name'        => $p['name'],
+                        'description' => $p['description'] ?: $p['name'],
+                        'brand'       => ['@type' => 'Brand', 'name' => $p['brand'] ?: 'FromUSA'],
+                        'offers'      => [
+                            '@type'           => 'Offer',
+                            'priceCurrency'   => 'COP',
+                            'price'           => $p['price'],
+                            'availability'    => 'https://schema.org/InStock',
+                            'seller'          => ['@id' => $siteUrl . '/#organization'],
+                        ],
+                    ],
+                ];
+                if (!empty($p['images'][0])) {
+                    $item['item']['image'] = $siteUrl . $p['images'][0];
+                }
+                if ($p['market_price'] && $p['market_price'] > $p['price']) {
+                    $item['item']['offers']['priceValidUntil'] = '2027-12-31';
+                    $item['item']['offers']['discount'] = $p['discount'] . '%';
+                }
+                return $item;
+            }, $topProducts, array_keys($topProducts)),
+        ],
+    ],
+];
+echo '  <script type="application/ld+json">' . json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
+?>
+
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">

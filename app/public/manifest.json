@@ -1,0 +1,21 @@
+{
+  "name": "FromUSA.com.co",
+  "short_name": "FromUSA",
+  "description": "Tecnología importada directo de USA al mejor precio en Colombia",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F5F5F7",
+  "theme_color": "#0A1628",
+  "lang": "es-CO",
+  "categories": ["shopping", "business"],
+  "screenshots": [
+    {
+      "src": "/og-image.php",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "label": "FromUSA.com.co — Catálogo de productos"
+    }
+  ]
+}
