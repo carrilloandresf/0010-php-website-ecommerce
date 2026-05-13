@@ -6,15 +6,32 @@
 
   <url>
     <loc>https://fromusa.com.co/</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/"/>
     <image:image>
       <image:loc>https://fromusa.com.co/og-image.php</image:loc>
-      <image:title>FromUSA.com.co — Tecnología importada directo de USA</image:title>
-      <image:caption>Tienda de tecnología importada directamente desde Estados Unidos a Colombia</image:caption>
+      <image:title>FromUSA.com.co — Marketplace de importados USA en Colombia</image:title>
+      <image:caption>La plaza de comercio online más grande de Colombia para productos importados de USA</image:caption>
     </image:image>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/terminos</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/terminos"/>
+  </url>
+
+
+  <url>
+    <loc>https://fromusa.com.co/vende</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/vende"/>
   </url>
 
 </urlset>

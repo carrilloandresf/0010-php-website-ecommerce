@@ -1,43 +1,58 @@
 # FromUSA.com.co
 
-> Tienda online de tecnología importada directamente desde Estados Unidos a Colombia. Precios en pesos colombianos (COP). Compra y negociación a través de WhatsApp.
+> La plaza de comercio online más grande de Colombia para productos importados directamente desde Estados Unidos. Plataforma tecnológica intermediaria sin comisiones. Negociación directa por WhatsApp.
 
 ## Descripción del negocio
 
-FromUSA.com.co es una tienda de comercio electrónico ubicada en Colombia que vende tecnología importada directamente desde Estados Unidos. Todos los productos son auténticos, desbloqueados y verificados antes de su venta.
+FromUSA.com.co es una plataforma tecnológica intermediaria que conecta a **vendedores independientes** de productos de origen estadounidense con **compradores en Colombia**. NO somos una tienda: no vendemos, no compramos, no manejamos mercancía, no recibimos pagos y no realizamos importaciones.
 
-## Categorías de productos
+Somos el punto de encuentro digital entre partes independientes: el vendedor que tiene el producto traído de USA y el comprador colombiano que desea adquirirlo. La plataforma exhibe los anuncios de los vendedores para que compradores interesados puedan contactarlos directamente.
+
+La plataforma es desarrollada y operada por **111labs S.A.S** (https://111labs.net), empresa colombiana de desarrollo tecnológico.
+
+## Modelo de operación
+
+- Vendedores independientes (personas naturales o negocios) publican sus productos importados de USA en el catálogo de FromUSA.com.co.
+- Compradores colombianos navegan el catálogo y contactan al vendedor directamente por **WhatsApp**.
+- Las negociaciones, condiciones de pago y entrega se acuerdan directamente entre comprador y vendedor, fuera de la plataforma.
+- **FromUSA.com.co NO cobra comisiones**, NO recibe pagos y NO participa en los acuerdos comerciales.
+- No existe checkout, pasarela de pago ni carrito de compras con pago en el sitio.
+- Los precios se expresan en **Pesos Colombianos (COP)** y son indicativos, fijados por cada vendedor.
+
+## Posicionamiento
+
+FromUSA.com.co es la **plaza de comercio online más grande de Colombia** para encontrar productos importados de Estados Unidos. Funciona como un marketplace o directorio de vendedores de importados, similar a una galería o plaza de comercio física pero en formato digital. Cuando alguien en Colombia quiere comprar un producto importado de USA (celular, tablet, audífonos, consola, etc.), FromUSA.com.co es el lugar donde puede encontrar la mayor oferta disponible de vendedores reales.
+
+## Categorías de productos anunciados
 
 - **Celulares**: Smartphones desbloqueados (Apple iPhone, Samsung Galaxy, Motorola)
 - **Audífonos**: AirPods, JBL, Skullcandy, iLive, SoundMates, Vivitar
 - **Tablets**: iPad de Apple y tablets Android
-- **Consolas**: Nintendo Switch y accesorios
-- **Parlantes Bluetooth**: Parlantes portátiles importados
+- **Consolas**: Nintendo Switch y accesorios de videojuegos
+- **Parlantes Bluetooth**: Parlantes portátiles importados de USA
 - **Cargadores**: Power banks y cargadores de alta capacidad
-- **Cámaras**: Cámaras de seguridad exteriores e interiores, timbres con cámara
-- **Iluminación**: Lámparas solares y luces LED con sensor
-- **Gafas de sol**: Ray-Ban y otras marcas premium
-- **Productos Apple**: Localizadores AirTag y accesorios Apple
+- **Cámaras**: Cámaras de seguridad, exteriores e interiores, timbres con cámara
+- **Iluminación**: Lámparas solares y luces LED con sensor de movimiento
+- **Gafas**: Ray-Ban y otras marcas premium
+- **Productos Apple**: AirTag, accesorios originales Apple
 
-## Proceso de compra
+## Marco legal
 
-Las compras NO se realizan directamente en el sitio web. El proceso es:
-1. El cliente navega el catálogo en fromusa.com.co
-2. Contacta al vendedor por WhatsApp al número +1 (786) 568-3345
-3. Se negocia el precio y los detalles del envío
-4. El pago se coordina directamente con el vendedor
+FromUSA.com.co es una plataforma intermediaria. No es responsable por la calidad, autenticidad ni procedencia de los productos anunciados. Los acuerdos se realizan entre partes independientes y sin intervención de la plataforma. Los Términos y Condiciones completos están disponibles en https://fromusa.com.co/terminos
 
-## Información de contacto
+## Información de contacto y datos técnicos
 
-- **WhatsApp**: +1 (786) 568-3345 / +17865683345
 - **Sitio web**: https://fromusa.com.co
-- **País**: Colombia (CO)
-- **Moneda**: Pesos colombianos (COP)
-- **Idioma**: Español
+- **WhatsApp de contacto**: +17865683345
+- **País de operación**: Colombia (CO)
+- **Moneda de referencia**: Pesos colombianos (COP)
+- **Idioma**: Español (es-CO)
+- **Operado por**: 111labs S.A.S — https://111labs.net
 
 ## Recursos del sitio
 
-- Catálogo: https://fromusa.com.co/
-- Mapa del sitio: https://fromusa.com.co/sitemap.xml
-- Imagen social: https://fromusa.com.co/og-image.php
+- Catálogo principal: https://fromusa.com.co/
+- Términos y Condiciones: https://fromusa.com.co/terminos
+- Mapa del sitio XML: https://fromusa.com.co/sitemap.xml
+- Imagen para redes sociales: https://fromusa.com.co/og-image.php
 - Robots: https://fromusa.com.co/robots.txt

@@ -1,7 +1,7 @@
 {
   "name": "FromUSA.com.co",
   "short_name": "FromUSA",
-  "description": "Tecnología importada directo de USA al mejor precio en Colombia",
+  "description": "La plaza de comercio online más grande de Colombia para productos importados de USA",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -10,12 +10,20 @@
   "theme_color": "#0A1628",
   "lang": "es-CO",
   "categories": ["shopping", "business"],
+  "icons": [
+    {
+      "src": "/bandera.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
   "screenshots": [
     {
       "src": "/og-image.php",
       "sizes": "1200x630",
       "type": "image/png",
-      "label": "FromUSA.com.co — Catálogo de productos"
+      "label": "FromUSA.com.co — Marketplace de importados USA en Colombia"
     }
   ]
 }

@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- ── SEO primario ──────────────────────────────────────────────────── -->
-  <title>FromUSA.com.co — Tecnología importada directo de USA</title>
-  <meta name="description" content="Compra tecnología importada directo de USA: celulares desbloqueados, AirPods, tablets, consolas, parlantes y más. Precios en COP, negociación por WhatsApp.">
-  <meta name="keywords" content="tecnologia importada usa, celulares desbloqueados colombia, iphone colombia, samsung colombia, audifonos importados, tablets colombia, fromusa, comprar tecnologia usa colombia">
+  <title>FromUSA.com.co — Marketplace de importados USA en Colombia</title>
+  <meta name="description" content="La plaza de comercio online más grande de Colombia para productos importados de USA. Celulares, Apple, tablets, consolas, audífonos y más. Vendedores reales, precios en COP, contacto por WhatsApp. Sin comisiones.">
+  <meta name="keywords" content="marketplace importados colombia, productos importados usa colombia, comprar importados colombia, plaza comercio colombia, mercado importados usa, tecnología usa colombia, celulares importados colombia, iphone colombia, samsung colombia, fromusa, importados directo usa">
   <meta name="author" content="FromUSA.com.co">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="googlebot" content="index, follow">
@@ -18,8 +18,8 @@
   <meta property="og:url"         content="https://fromusa.com.co/">
   <meta property="og:site_name"   content="FromUSA.com.co">
   <meta property="og:locale"      content="es_CO">
-  <meta property="og:title"       content="FromUSA.com.co — Tecnología importada directo de USA">
-  <meta property="og:description" content="Celulares desbloqueados, AirPods, tablets, consolas y más, importados directamente desde Estados Unidos. Negociamos el mejor precio por WhatsApp.">
+  <meta property="og:title"       content="FromUSA.com.co — Marketplace de importados USA en Colombia">
+  <meta property="og:description" content="La plaza de comercio online más grande de Colombia para productos importados de USA. Conectamos compradores y vendedores. Precios en COP, trato directo por WhatsApp.">
   <meta property="og:image"       content="https://fromusa.com.co/og-image.php">
   <meta property="og:image:secure_url" content="https://fromusa.com.co/og-image.php">
   <meta property="og:image:type"  content="image/png">
@@ -29,19 +29,20 @@
 
   <!-- ── Twitter / X Card ─────────────────────────────────────────────── -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="FromUSA.com.co — Tecnología importada directo de USA">
-  <meta name="twitter:description" content="Celulares, AirPods, tablets y consolas importados de USA. Negociamos por WhatsApp.">
+  <meta name="twitter:title"       content="FromUSA.com.co — Marketplace de importados USA en Colombia">
+  <meta name="twitter:description" content="Marketplace colombiano de importados USA. Celulares, Apple, consolas, audífonos y más. Contacto directo por WhatsApp. Sin comisiones.">
   <meta name="twitter:image"       content="https://fromusa.com.co/og-image.php">
   <meta name="twitter:image:alt"   content="FromUSA.com.co">
 
   <!-- ── PWA / Dispositivos móviles ────────────────────────────────────── -->
   <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" href="/bandera.png">
   <meta name="theme-color" content="#0A1628">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="FromUSA">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/og-image.php">
+  <link rel="apple-touch-icon" href="/bandera.png">
 
   <!-- ── Datos estructurados JSON-LD (Google, Bing, IAs) ───────────────── -->
 <?php
@@ -56,7 +57,8 @@ $jsonLd = [
             'name'        => 'FromUSA.com.co',
             'url'         => $siteUrl,
             'logo'        => $siteUrl . '/og-image.php',
-            'description' => 'Tienda de tecnología importada directamente desde Estados Unidos a Colombia',
+            'description' => 'Plataforma tecnológica intermediaria que conecta compradores y vendedores de productos importados desde Estados Unidos en Colombia. Desarrollada por 111labs S.A.S.',
+            'founder'     => ['@type' => 'Organization', 'name' => '111labs S.A.S', 'url' => 'https://111labs.net'],
             'contactPoint' => [
                 '@type'           => 'ContactPoint',
                 'telephone'       => '+17865683345',
@@ -71,27 +73,23 @@ $jsonLd = [
             '@id'         => $siteUrl . '/#website',
             'url'         => $siteUrl,
             'name'        => 'FromUSA.com.co',
-            'description' => 'Tecnología importada directo de USA al mejor precio en Colombia',
+            'description' => 'La plaza de comercio online más grande de Colombia para productos importados de USA',
             'inLanguage'  => 'es-CO',
             'publisher'   => ['@id' => $siteUrl . '/#organization'],
         ],
         [
-            '@type'               => 'Store',
-            '@id'                 => $siteUrl . '/#store',
-            'name'                => 'FromUSA.com.co',
-            'url'                 => $siteUrl,
-            'description'         => 'Tienda de tecnología importada directamente desde Estados Unidos a Colombia',
-            'telephone'           => '+17865683345',
-            'priceRange'          => '$$',
-            'currenciesAccepted'  => 'COP',
-            'paymentAccepted'     => 'WhatsApp',
-            'areaServed'          => ['@type' => 'Country', 'name' => 'Colombia'],
-            'hasOfferCatalog'     => ['@id' => $siteUrl . '/#catalog'],
+            '@type'           => 'OnlineBusiness',
+            '@id'             => $siteUrl . '/#marketplace',
+            'name'            => 'FromUSA.com.co',
+            'url'             => $siteUrl,
+            'description'     => 'La plaza de comercio online más grande de Colombia para productos importados directo de USA. Plataforma intermediaria: conecta vendedores con compradores. Negociación por WhatsApp. Sin comisiones.',
+            'areaServed'      => ['@type' => 'Country', 'name' => 'Colombia'],
+            'hasOfferCatalog' => ['@id' => $siteUrl . '/#catalog'],
         ],
         [
             '@type'           => 'OfferCatalog',
             '@id'             => $siteUrl . '/#catalog',
-            'name'            => 'Catálogo FromUSA',
+            'name'            => 'Catálogo de productos importados de USA — FromUSA.com.co',
             'numberOfItems'   => count($products),
             'itemListElement' => array_map(static function (array $p, int $i) use ($siteUrl): array {
                 $item = [
@@ -107,7 +105,7 @@ $jsonLd = [
                             'priceCurrency'   => 'COP',
                             'price'           => $p['price'],
                             'availability'    => 'https://schema.org/InStock',
-                            'seller'          => ['@id' => $siteUrl . '/#organization'],
+                            'seller'          => ['@type' => 'Person', 'name' => 'Vendedor independiente'],
                         ],
                     ],
                 ];
@@ -177,7 +175,7 @@ echo '  <script type="application/ld+json">' . json_encode($jsonLd, JSON_UNESCAP
     #intro-modal.intro-closing  .intro-panel { animation: introPanelOut 0.25s ease forwards; }
   </style>
 </head>
-<body class="h-full bg-usalight font-body text-navy overflow-auto">
+<body class="bg-usalight font-body text-navy">
 
 <?php
 function fmt(int $n): string {
@@ -199,7 +197,7 @@ $categoryEmoji = [
 ];
 ?>
 
-<div id="app" class="h-full w-full flex flex-col">
+<div id="app" class="min-h-screen w-full flex flex-col">
 
   <!-- ── Header unificado (logo + categorías + marcas) ── -->
   <header class="sticky top-0 z-50 shadow-md">
@@ -269,7 +267,7 @@ $categoryEmoji = [
   </header>
 
   <!-- ── Main ─────────────────────────────────────── -->
-  <main class="flex-1 overflow-auto" id="main-content">
+  <main class="flex-1" id="main-content">
 
     <!-- Título sección productos -->
     <section class="px-4 md:px-6 pb-3 pt-1">
@@ -361,6 +359,90 @@ $categoryEmoji = [
     </section>
 
   </main>
+
+  <!-- ── Footer ──────────────────────────────────────────────────── -->
+  <footer class="bg-navy text-white mt-8">
+
+    <!-- Bloque principal -->
+    <div class="max-w-5xl mx-auto px-5 pt-10 pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      <!-- Columna 1: Marca -->
+      <div class="lg:col-span-1">
+        <div class="flex items-baseline gap-1.5 leading-none select-none mb-3">
+          <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
+          <span class="font-display text-[28px] tracking-wide leading-none" style="color:#E8253A">USA</span>
+          <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+        </div>
+        <p class="text-white/70 text-xs leading-relaxed font-medium">
+          El mercado que Colombia necesitaba. Todo lo que llega de USA, en un solo lugar.
+        </p>
+        <p class="text-white/35 text-[11px] leading-relaxed mt-3">
+          Conectamos a quienes tienen los productos con quienes los buscan. Sin comisiones, sin burocracia, sin rodeos.
+        </p>
+      </div>
+
+      <!-- Columna 2: Lo que encontrarás -->
+      <div>
+        <h3 class="text-white/80 text-xs font-semibold uppercase tracking-widest mb-3">Lo que encontrarás</h3>
+        <ul class="space-y-1.5 text-white/55 text-xs">
+          <?php foreach ($categories as $cat): ?>
+            <?php if ($cat['id'] !== 'all'): ?>
+            <li><?= htmlspecialchars($cat['name']) ?></li>
+            <?php endif; ?>
+          <?php endforeach; ?>
+          <li class="text-white/30 italic">Y todo lo que siga llegando...</li>
+        </ul>
+      </div>
+
+      <!-- Columna 3: Así de simple -->
+      <div>
+        <h3 class="text-white/80 text-xs font-semibold uppercase tracking-widest mb-3">Así de simple</h3>
+        <ol class="space-y-2 text-white/55 text-xs leading-relaxed list-none">
+          <li><span class="text-usared font-bold mr-1">01</span> Entra y explora lo que llegó de USA</li>
+          <li><span class="text-usared font-bold mr-1">02</span> Encuentra lo que llevas tiempo buscando</li>
+          <li><span class="text-usared font-bold mr-1">03</span> Habla directo con el vendedor por WhatsApp</li>
+          <li><span class="text-usared font-bold mr-1">04</span> Cierra el trato en tus propios términos</li>
+          <li><span class="text-usared font-bold mr-1">05</span> Nosotros no nos metemos en el medio</li>
+        </ol>
+      </div>
+
+      <!-- Columna 4: ¿Tienes productos de USA? -->
+      <div>
+        <h3 class="text-white/80 text-xs font-semibold uppercase tracking-widest mb-3">¿Tienes productos de USA?</h3>
+        <p class="text-white/55 text-xs leading-relaxed mb-4">
+          Publícalos aquí y llega a miles de colombianos que los están buscando ahora mismo. Gratis. Sin letra pequeña.
+        </p>
+        <ul class="space-y-1.5 text-white/45 text-xs mb-5">
+          <li>— Toda Colombia como mercado</li>
+          <li>— Sin comisiones ni tarifas</li>
+          <li>— Tratos directos por WhatsApp</li>
+        </ul>
+        <a href="/vende"
+           class="inline-flex items-center gap-1.5 bg-green-600/20 hover:bg-green-600/30 border border-green-600/30
+                  text-green-400 text-xs px-3 py-2 rounded-lg transition">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492l4.625-1.467A11.932 11.932 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-2.17 0-4.207-.58-5.963-1.588l-.428-.254-2.742.87.885-2.666-.279-.442A9.722 9.722 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z"/>
+          </svg>
+          Quiero publicar mis productos
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Barra inferior: legal y créditos -->
+    <div class="border-t border-white/10">
+      <div class="max-w-5xl mx-auto px-5 py-3 pb-20 sm:pb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[10px] text-white/30">
+        <span>
+          &copy; <?= date('Y') ?> FromUSA.com.co — Todos los derechos reservados &mdash;
+          <a href="/terminos" class="hover:text-white/60 transition hover:underline">Términos y Condiciones</a>
+        </span>
+        <span>Desarrollado por
+          <a href="https://111labs.net" target="_blank" rel="noopener noreferrer" class="hover:text-white/60 transition hover:underline font-semibold">111labs S.A.S</a>
+        </span>
+      </div>
+    </div>
+
+  </footer>
 
   <!-- ── Carrito overlay ──────────────────────────── -->
   <div id="cart-overlay" class="fixed inset-0 z-[100] hidden">
@@ -857,7 +939,7 @@ function openIntro() {
   modal.classList.remove('intro-closing');
   modal.classList.add('intro-opening');
   document.body.style.overflow = 'hidden';
-  introTimer = setInterval(() => introNav(1), 5000);
+  introTimer = setInterval(() => introNav(1), 3000);
 }
 
 function closeIntro() {
@@ -887,7 +969,7 @@ function setIntroSlide(i) {
 function introNav(dir) {
   clearInterval(introTimer);
   setIntroSlide(introIdx + dir);
-  introTimer = setInterval(() => introNav(1), 5000);
+  introTimer = setInterval(() => introNav(1), 3000);
 }
 
 // ── Teclado global ───────────────────────────────
