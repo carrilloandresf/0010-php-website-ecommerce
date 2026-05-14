@@ -164,15 +164,6 @@ echo '  <script type="application/ld+json">' . json_encode($jsonLd, JSON_UNESCAP
     #product-modal { display: none; }
     #product-modal.open { display: flex; align-items: flex-end; justify-content: center; }
     @media (min-width: 768px) { #product-modal.open { align-items: center; } }
-    /* Intro modal — glass + animaciones */
-    @keyframes introOverlayIn  { from{opacity:0} to{opacity:1} }
-    @keyframes introOverlayOut { from{opacity:1} to{opacity:0} }
-    @keyframes introPanelIn  { from{opacity:0;transform:scale(0.92) translateY(24px)} to{opacity:1;transform:scale(1) translateY(0)} }
-    @keyframes introPanelOut { from{opacity:1;transform:scale(1)    translateY(0)}    to{opacity:0;transform:scale(0.95) translateY(12px)} }
-    #intro-modal.intro-opening { animation: introOverlayIn  0.35s ease forwards; }
-    #intro-modal.intro-closing  { animation: introOverlayOut 0.28s ease forwards; }
-    #intro-modal.intro-opening .intro-panel { animation: introPanelIn  0.48s cubic-bezier(0.34,1.3,0.64,1) 0.05s both; }
-    #intro-modal.intro-closing  .intro-panel { animation: introPanelOut 0.25s ease forwards; }
   </style>
 </head>
 <body class="bg-usalight font-body text-navy">
@@ -556,48 +547,6 @@ $categoryEmoji = [
     </div>
   </div>
 
-  <!-- ── Modal introductorio (publicidad) ─────────── -->
-  <div id="intro-modal"
-    class="fixed inset-0 z-[300] bg-navy/35 backdrop-blur-2xl
-           flex items-center justify-center"
-    style="display:none">
-    <div class="absolute inset-0" onclick="closeIntro()"></div>
-
-    <div class="intro-panel relative z-10 w-full max-w-xl mx-4 rounded-3xl overflow-hidden
-                ring-1 ring-white/20 shadow-[0_8px_64px_rgba(0,0,0,0.55)]">
-      <img id="intro-img" src="" alt="Publicidad FromUSA"
-        class="w-full block object-contain max-h-[75vh] bg-black/50">
-
-      <!-- Mensaje de bienvenida -->
-      <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent px-6 pt-10 pb-5">
-        <p class="text-white font-bold text-lg leading-snug mb-1">Bienvenido a FromUSA.com.co</p>
-        <p class="text-white/75 text-sm leading-relaxed">
-          Tecnología importada directo de USA. Contáctanos por WhatsApp y
-          <span class="text-white font-semibold">negociamos el precio ideal</span> para ti.
-        </p>
-        <button onclick="closeIntro()"
-          class="mt-3 w-full bg-white/15 hover:bg-white/25 backdrop-blur-sm border border-white/30 text-white text-sm font-semibold py-2.5 rounded-xl transition">
-          Ver productos
-        </button>
-      </div>
-
-      <button onclick="closeIntro()"
-        class="absolute top-3 right-3 w-9 h-9 bg-black/50 hover:bg-black/70 transition
-               rounded-full flex items-center justify-center text-white text-lg leading-none">✕</button>
-
-      <button id="intro-prev" onclick="introNav(-1)"
-        class="absolute left-3 top-[40%] -translate-y-1/2 w-10 h-10 bg-black/40 hover:bg-black/60
-               rounded-full flex items-center justify-center text-white text-2xl leading-none transition">‹</button>
-
-      <button id="intro-next" onclick="introNav(1)"
-        class="absolute right-3 top-[40%] -translate-y-1/2 w-10 h-10 bg-black/40 hover:bg-black/60
-               rounded-full flex items-center justify-center text-white text-2xl leading-none transition">›</button>
-
-      <div id="intro-dots"
-        class="absolute top-3 left-0 right-0 flex justify-center gap-2 pointer-events-none">
-      </div>
-    </div>
-  </div>
 
   <!-- ── WhatsApp float ────────────────────────────── -->
   <a
@@ -926,61 +875,15 @@ function closeModal() {
   currentProduct = null;
 }
 
-// ── Modal introductorio (publicidad) ────────────
-const introSlides = <?= json_encode($slides, JSON_UNESCAPED_UNICODE) ?>;
-let introIdx   = 0;
-let introTimer = null;
-
-function openIntro() {
-  if (!introSlides.length) return;
-  setIntroSlide(0);
-  const modal = document.getElementById('intro-modal');
-  modal.style.display = 'flex';
-  modal.classList.remove('intro-closing');
-  modal.classList.add('intro-opening');
-  document.body.style.overflow = 'hidden';
-  introTimer = setInterval(() => introNav(1), 3000);
-}
-
-function closeIntro() {
-  clearInterval(introTimer);
-  introTimer = null;
-  const modal = document.getElementById('intro-modal');
-  modal.classList.remove('intro-opening');
-  modal.classList.add('intro-closing');
-  setTimeout(() => {
-    modal.style.display = 'none';
-    modal.classList.remove('intro-closing');
-    document.body.style.overflow = '';
-  }, 300);
-}
-
-function setIntroSlide(i) {
-  introIdx = ((i % introSlides.length) + introSlides.length) % introSlides.length;
-  document.getElementById('intro-img').src = introSlides[introIdx];
-  const multi = introSlides.length > 1;
-  document.getElementById('intro-prev').classList.toggle('hidden', !multi);
-  document.getElementById('intro-next').classList.toggle('hidden', !multi);
-  document.getElementById('intro-dots').innerHTML = introSlides.map((_, k) =>
-    `<span class="w-2 h-2 rounded-full transition ${k === introIdx ? 'bg-white scale-125' : 'bg-white/40'}"></span>`
-  ).join('');
-}
-
-function introNav(dir) {
-  clearInterval(introTimer);
-  setIntroSlide(introIdx + dir);
-  introTimer = setInterval(() => introNav(1), 3000);
-}
 
 // ── Teclado global ───────────────────────────────
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeIntro(); }
+  if (e.key === 'Escape') { closeModal(); }
 });
 
 // ── Init ─────────────────────────────────────────
 initCardSlideshows();
 lucide.createIcons();
-openIntro();
 </script>
 </body>
 </html>
