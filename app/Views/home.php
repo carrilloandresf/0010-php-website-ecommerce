@@ -162,7 +162,7 @@ echo '  <script type="application/ld+json">' . json_encode($jsonLd, JSON_UNESCAP
     .card-slides { transition: transform 0.5s ease; }
     /* Modal producto */
     #product-modal { display: none; }
-    #product-modal.open { display: flex; align-items: flex-end; justify-content: center; }
+    #product-modal.open { display: flex; align-items: center; justify-content: center; }
     @media (min-width: 768px) { #product-modal.open { align-items: center; } }
   </style>
 </head>
@@ -482,7 +482,7 @@ $categoryEmoji = [
     <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
 
     <div id="modal-panel"
-      class="relative z-10 bg-white w-full rounded-t-3xl
+      class="relative z-10 bg-white w-[85%] rounded-3xl
              md:rounded-2xl md:max-w-4xl md:w-[92%]
              max-h-[92vh] md:max-h-[88vh]
              flex flex-col md:flex-row overflow-hidden slide-up">
