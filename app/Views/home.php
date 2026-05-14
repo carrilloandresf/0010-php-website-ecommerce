@@ -372,48 +372,54 @@ $categoryEmoji = [
         </p>
       </div>
 
-      <!-- Columna 2: Lo que encontrarás -->
+      <!-- Columna 2: El marketplace (links SEO) -->
       <div>
-        <h3 class="text-white/80 text-xs font-semibold uppercase tracking-widest mb-3">Lo que encontrarás</h3>
-        <ul class="space-y-1.5 text-white/55 text-xs">
-          <?php foreach ($categories as $cat): ?>
-            <?php if ($cat['id'] !== 'all'): ?>
-            <li><?= htmlspecialchars($cat['name']) ?></li>
-            <?php endif; ?>
-          <?php endforeach; ?>
-          <li class="text-white/30 italic">Y todo lo que siga llegando...</li>
+        <h3 class="text-white/80 text-xs font-semibold uppercase tracking-widest mb-3">El marketplace</h3>
+        <ul class="space-y-2 text-white/55 text-xs">
+          <li><a href="/marketplace"  class="hover:text-white transition hover:underline">¿Qué es FromUSA.com.co?</a></li>
+          <li><a href="/como-comprar" class="hover:text-white transition hover:underline">Cómo comprar importados de USA</a></li>
+          <li><a href="/faq"          class="hover:text-white transition hover:underline">Preguntas frecuentes</a></li>
+          <li><a href="/vende"        class="hover:text-white transition hover:underline">Quiero vender aquí</a></li>
+          <li><a href="/terminos"     class="hover:text-white transition hover:underline">Términos y condiciones</a></li>
         </ul>
       </div>
 
-      <!-- Columna 3: Así de simple -->
+      <!-- Columna 3: Colombia entera (ciudades SEO) -->
       <div>
-        <h3 class="text-white/80 text-xs font-semibold uppercase tracking-widest mb-3">Así de simple</h3>
-        <ol class="space-y-2 text-white/55 text-xs leading-relaxed list-none">
-          <li><span class="text-usared font-bold mr-1">01</span> Entra y explora lo que llegó de USA</li>
-          <li><span class="text-usared font-bold mr-1">02</span> Encuentra lo que llevas tiempo buscando</li>
-          <li><span class="text-usared font-bold mr-1">03</span> Habla directo con el vendedor por WhatsApp</li>
-          <li><span class="text-usared font-bold mr-1">04</span> Cierra el trato en tus propios términos</li>
-          <li><span class="text-usared font-bold mr-1">05</span> Nosotros no nos metemos en el medio</li>
-        </ol>
+        <h3 class="text-white/80 text-xs font-semibold uppercase tracking-widest mb-3">Colombia entera</h3>
+        <div class="grid grid-cols-2 gap-x-3 gap-y-2 text-white/55 text-xs">
+          <a href="/ciudad/bogota"        class="hover:text-white transition hover:underline">Bogotá</a>
+          <a href="/ciudad/medellin"      class="hover:text-white transition hover:underline">Medellín</a>
+          <a href="/ciudad/cali"          class="hover:text-white transition hover:underline">Cali</a>
+          <a href="/ciudad/barranquilla"  class="hover:text-white transition hover:underline">Barranquilla</a>
+          <a href="/ciudad/bucaramanga"   class="hover:text-white transition hover:underline">Bucaramanga</a>
+          <a href="/ciudad/cartagena"     class="hover:text-white transition hover:underline">Cartagena</a>
+          <a href="/ciudad/cucuta"        class="hover:text-white transition hover:underline">Cúcuta</a>
+          <a href="/ciudad/pereira"       class="hover:text-white transition hover:underline">Pereira</a>
+          <a href="/ciudad/santa-marta"   class="hover:text-white transition hover:underline">Santa Marta</a>
+          <a href="/ciudad/manizales"     class="hover:text-white transition hover:underline">Manizales</a>
+          <a href="/ciudad/ibague"        class="hover:text-white transition hover:underline">Ibagué</a>
+          <a href="/ciudad/pasto"         class="hover:text-white transition hover:underline">Pasto</a>
+          <a href="/ciudad/armenia"       class="hover:text-white transition hover:underline">Armenia</a>
+          <a href="/ciudad/villavicencio" class="hover:text-white transition hover:underline">Villavicencio</a>
+          <a href="/ciudad/monteria"      class="hover:text-white transition hover:underline">Montería</a>
+        </div>
       </div>
 
       <!-- Columna 4: ¿Tienes productos de USA? -->
       <div>
         <h3 class="text-white/80 text-xs font-semibold uppercase tracking-widest mb-3">¿Tienes productos de USA?</h3>
         <p class="text-white/55 text-xs leading-relaxed mb-4">
-          Publícalos aquí y llega a miles de colombianos que los están buscando ahora mismo. Gratis. Sin letra pequeña.
+          Publícalos aquí y llega a miles de colombianos que los están buscando ahora mismo. Gratis. Sin comisiones.
         </p>
-        <ul class="space-y-1.5 text-white/45 text-xs mb-5">
+        <ul class="space-y-1.5 text-white/40 text-xs mb-5">
+          <li>— Vendedores certificados</li>
           <li>— Toda Colombia como mercado</li>
-          <li>— Sin comisiones ni tarifas</li>
           <li>— Tratos directos por WhatsApp</li>
         </ul>
         <a href="/vende"
            class="inline-flex items-center gap-1.5 bg-green-600/20 hover:bg-green-600/30 border border-green-600/30
                   text-green-400 text-xs px-3 py-2 rounded-lg transition">
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492l4.625-1.467A11.932 11.932 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-2.17 0-4.207-.58-5.963-1.588l-.428-.254-2.742.87.885-2.666-.279-.442A9.722 9.722 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z"/>
-          </svg>
           Quiero publicar mis productos
         </a>
       </div>

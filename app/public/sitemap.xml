@@ -4,6 +4,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
+  <!-- ── Página principal ─────────────────────────────────────────── -->
   <url>
     <loc>https://fromusa.com.co/</loc>
     <lastmod>2026-05-13</lastmod>
@@ -17,6 +18,39 @@
     </image:image>
   </url>
 
+  <!-- ── Páginas informativas (SEO) ──────────────────────────────── -->
+  <url>
+    <loc>https://fromusa.com.co/marketplace</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/marketplace"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/como-comprar</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/como-comprar"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/faq</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/faq"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/vende</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/vende"/>
+  </url>
+
   <url>
     <loc>https://fromusa.com.co/terminos</loc>
     <lastmod>2026-05-13</lastmod>
@@ -25,13 +59,125 @@
     <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/terminos"/>
   </url>
 
+  <!-- ── Landings por ciudad ──────────────────────────────────────── -->
+  <url>
+    <loc>https://fromusa.com.co/ciudad/bogota</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/bogota"/>
+  </url>
 
   <url>
-    <loc>https://fromusa.com.co/vende</loc>
+    <loc>https://fromusa.com.co/ciudad/medellin</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/medellin"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/ciudad/cali</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/cali"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/ciudad/barranquilla</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/barranquilla"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/ciudad/bucaramanga</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/bucaramanga"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/ciudad/cartagena</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/cartagena"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/ciudad/cucuta</loc>
     <lastmod>2026-05-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/vende"/>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/cucuta"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/ciudad/pereira</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/pereira"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/ciudad/santa-marta</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/santa-marta"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/ciudad/manizales</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/manizales"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/ciudad/ibague</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/ibague"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/ciudad/pasto</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/pasto"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/ciudad/armenia</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/armenia"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/ciudad/villavicencio</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/villavicencio"/>
+  </url>
+
+  <url>
+    <loc>https://fromusa.com.co/ciudad/monteria</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://fromusa.com.co/ciudad/monteria"/>
   </url>
 
 </urlset>

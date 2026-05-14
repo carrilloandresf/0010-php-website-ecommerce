@@ -281,46 +281,7 @@
     </div>
   </main>
 
-  <!-- ── Footer ──────────────────────────────────────────────────── -->
-  <footer class="bg-navy text-white">
-    <div class="max-w-5xl mx-auto px-5 py-8">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-          <div class="flex items-baseline gap-1.5 leading-none select-none mb-1">
-            <span class="text-white/70 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
-            <span class="font-display text-[22px] tracking-wide leading-none" style="color:#E8253A">USA</span>
-            <span class="text-white/60 text-[11px] font-medium">.com.co</span>
-          </div>
-          <p class="text-white/55 text-xs leading-relaxed max-w-xs">
-            La plaza de comercio online más grande de Colombia para productos importados de USA.
-          </p>
-        </div>
-        <nav class="flex flex-wrap gap-x-5 gap-y-2 text-sm">
-          <a href="/terminos" class="text-white/70 hover:text-white transition underline-offset-2 hover:underline">
-            Términos y Condiciones
-          </a>
-          <a href="https://111labs.net" target="_blank" rel="noopener noreferrer"
-             class="text-white/70 hover:text-white transition underline-offset-2 hover:underline">
-            111labs S.A.S
-          </a>
-        </nav>
-      </div>
-      <p class="text-white/40 text-[11px] leading-relaxed border-t border-white/10 pt-5 mb-4">
-        FromUSA.com.co es una plataforma tecnológica intermediaria. No somos responsables por los productos
-        anunciados ni por los acuerdos entre compradores y vendedores. Todos los precios son indicativos
-        y acordados directamente entre las partes. No cobramos comisiones ni gestionamos pagos.
-      </p>
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-[11px] text-white/35">
-        <span>&copy; <?= date('Y') ?> FromUSA.com.co — Todos los derechos reservados.</span>
-        <span>Desarrollado por
-          <a href="https://111labs.net" target="_blank" rel="noopener noreferrer"
-             class="text-white/55 hover:text-white transition font-semibold">
-            111labs S.A.S
-          </a>
-        </span>
-      </div>
-    </div>
-  </footer>
+  <?php include __DIR__ . '/_footer.php'; ?>
 
 </body>
 </html>

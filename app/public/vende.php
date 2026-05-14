@@ -264,66 +264,7 @@
 
   </main>
 
-  <!-- ── Footer ──────────────────────────────────────────────────── -->
-  <footer class="bg-navy text-white">
-    <div class="max-w-5xl mx-auto px-5 pt-10 pb-8 grid grid-cols-1 sm:grid-cols-3 gap-8">
-
-      <!-- Columna 1: Marca -->
-      <div>
-        <div class="flex items-baseline gap-1.5 leading-none select-none mb-3">
-          <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
-          <span class="font-display text-[28px] tracking-wide leading-none" style="color:#E8253A">USA</span>
-          <span class="text-white/50 text-[11px] font-medium">.com.co</span>
-        </div>
-        <p class="text-white/70 text-xs leading-relaxed font-medium">
-          El mercado que Colombia necesitaba. Todo lo que llega de USA, en un solo lugar.
-        </p>
-        <p class="text-white/35 text-[11px] leading-relaxed mt-3">
-          Conectamos a quienes tienen los productos con quienes los buscan. Sin comisiones, sin burocracia, sin rodeos.
-        </p>
-      </div>
-
-      <!-- Columna 2: Para compradores -->
-      <div>
-        <h3 class="text-white/80 text-xs font-semibold uppercase tracking-widest mb-3">Para compradores</h3>
-        <ul class="space-y-1.5 text-white/55 text-xs">
-          <li>— Explora el catálogo completo de importados</li>
-          <li>— Contacta directo al vendedor por WhatsApp</li>
-          <li>— Negocia en tus propios términos</li>
-          <li>— Sin comisiones ni intermediarios</li>
-        </ul>
-        <a href="/" class="inline-block mt-4 text-xs text-white/50 hover:text-white transition hover:underline">
-          Ver el catálogo
-        </a>
-      </div>
-
-      <!-- Columna 3: Así de simple -->
-      <div>
-        <h3 class="text-white/80 text-xs font-semibold uppercase tracking-widest mb-3">Así de simple</h3>
-        <ol class="space-y-2 text-white/55 text-xs leading-relaxed list-none">
-          <li><span class="text-usared font-bold mr-1">01</span> Entra y explora lo que llegó de USA</li>
-          <li><span class="text-usared font-bold mr-1">02</span> Encuentra lo que llevas tiempo buscando</li>
-          <li><span class="text-usared font-bold mr-1">03</span> Habla directo con el vendedor por WhatsApp</li>
-          <li><span class="text-usared font-bold mr-1">04</span> Cierra el trato en tus propios términos</li>
-          <li><span class="text-usared font-bold mr-1">05</span> Nosotros no nos metemos en el medio</li>
-        </ol>
-      </div>
-
-    </div>
-
-    <!-- Barra inferior -->
-    <div class="border-t border-white/10">
-      <div class="max-w-5xl mx-auto px-5 py-3 pb-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[10px] text-white/30">
-        <span>
-          &copy; <?= date('Y') ?> FromUSA.com.co — Todos los derechos reservados &mdash;
-          <a href="/terminos" class="hover:text-white/60 transition hover:underline">Términos y Condiciones</a>
-        </span>
-        <span>Desarrollado por
-          <a href="https://111labs.net" target="_blank" rel="noopener noreferrer" class="hover:text-white/60 transition hover:underline font-semibold">111labs S.A.S</a>
-        </span>
-      </div>
-    </div>
-  </footer>
+  <?php include __DIR__ . '/_footer.php'; ?>
 
 </body>
 </html>
