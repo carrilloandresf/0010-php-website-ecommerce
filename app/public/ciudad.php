@@ -89,10 +89,13 @@ $otherCities = array_filter($ciudades, fn($k) => $k !== $slug, ARRAY_FILTER_USE_
   <!-- ── Header ──────────────────────────────────────────────────── -->
   <header class="bg-navy text-white sticky top-0 z-50">
     <div class="max-w-5xl mx-auto px-5 py-3 flex items-center justify-between">
-      <a href="/" class="flex items-baseline gap-1.5 leading-none select-none">
-        <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
-        <span class="font-display text-[24px] tracking-wide leading-none" style="color:#E8253A">USA</span>
-        <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+      <a href="/" class="flex flex-col leading-none select-none gap-1">
+        <div class="flex items-baseline gap-1.5">
+          <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
+          <span class="font-display text-[24px] tracking-wide leading-none" style="color:#E8253A">USA</span>
+          <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+        </div>
+        <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos · Marketplace</span>
       </a>
       <a href="/" class="text-white/70 hover:text-white text-sm transition flex items-center gap-1.5">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"

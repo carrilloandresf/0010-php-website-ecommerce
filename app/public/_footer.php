@@ -5,10 +5,13 @@
 
       <!-- Columna 1: Marca -->
       <div class="lg:col-span-1">
-        <a href="/" class="flex items-baseline gap-1.5 leading-none select-none mb-3 w-fit">
-          <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
-          <span class="font-display text-[28px] tracking-wide leading-none" style="color:#E8253A">USA</span>
-          <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+        <a href="/" class="flex flex-col leading-none select-none mb-3 w-fit gap-1">
+          <div class="flex items-baseline gap-1.5">
+            <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
+            <span class="font-display text-[28px] tracking-wide leading-none" style="color:#E8253A">USA</span>
+            <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+          </div>
+          <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos · Marketplace</span>
         </a>
         <p class="text-white/70 text-xs leading-relaxed font-medium">
           El mercado que Colombia necesitaba.<br>Todo lo que llega de USA, en un solo lugar.

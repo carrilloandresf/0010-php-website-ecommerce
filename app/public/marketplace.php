@@ -55,10 +55,13 @@
   <!-- ── Header ──────────────────────────────────────────────────── -->
   <header class="bg-navy text-white sticky top-0 z-50">
     <div class="max-w-5xl mx-auto px-5 py-3 flex items-center justify-between">
-      <a href="/" class="flex items-baseline gap-1.5 leading-none select-none">
-        <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
-        <span class="font-display text-[24px] tracking-wide leading-none" style="color:#E8253A">USA</span>
-        <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+      <a href="/" class="flex flex-col leading-none select-none gap-1">
+        <div class="flex items-baseline gap-1.5">
+          <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
+          <span class="font-display text-[24px] tracking-wide leading-none" style="color:#E8253A">USA</span>
+          <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+        </div>
+        <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos · Marketplace</span>
       </a>
       <a href="/" class="text-white/70 hover:text-white text-sm transition flex items-center gap-1.5">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
@@ -76,9 +79,12 @@
     <section class="bg-navy text-white">
       <div class="max-w-4xl mx-auto px-5 py-16 sm:py-24 text-center">
         <p class="text-usared text-xs font-semibold uppercase tracking-[0.2em] mb-4">El marketplace</p>
-        <h1 class="font-display text-5xl sm:text-7xl tracking-wide leading-none mb-6">
+        <h1 class="font-display text-5xl sm:text-7xl tracking-wide leading-none mb-5">
           El primer marketplace<br>colombiano solo para<br><span style="color:#E8253A">importados de USA</span>
         </h1>
+        <p class="font-display text-2xl sm:text-3xl tracking-widest text-white/40 mb-6">
+          De allá. Para acá. Sin rodeos.
+        </p>
         <p class="text-white/65 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-8">
           FromUSA.com.co nació para resolver un problema real: encontrar tecnología y productos originales de
           Estados Unidos en Colombia, con vendedores verificados, precios honestos y sin intermediarios que

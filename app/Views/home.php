@@ -217,10 +217,13 @@ $categoryEmoji = [
           <circle cx="12"  cy="10.4" r="1" fill="white"/>
         </svg>
         <!-- Texto logo -->
-        <div class="flex items-baseline gap-1.5 leading-none select-none">
-          <span class="text-white text-[11px] font-medium tracking-[0.18em] uppercase">from</span>
-          <span class="font-display text-[30px] tracking-wide leading-none" style="color:#E8253A;text-shadow:0 0 18px rgba(232,37,58,0.45)">USA</span>
-          <span class="text-white/75 text-[12px] font-medium">.com.co</span>
+        <div class="flex flex-col leading-none select-none gap-1">
+          <div class="flex items-baseline gap-1.5">
+            <span class="text-white text-[11px] font-medium tracking-[0.18em] uppercase">from</span>
+            <span class="font-display text-[30px] tracking-wide leading-none" style="color:#E8253A;text-shadow:0 0 18px rgba(232,37,58,0.45)">USA</span>
+            <span class="text-white/75 text-[12px] font-medium">.com.co</span>
+          </div>
+          <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos · Marketplace</span>
         </div>
       </div>
       <button id="cart-btn" class="relative p-2" onclick="toggleCart()">
@@ -359,10 +362,13 @@ $categoryEmoji = [
 
       <!-- Columna 1: Marca -->
       <div class="lg:col-span-1">
-        <div class="flex items-baseline gap-1.5 leading-none select-none mb-3">
-          <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
-          <span class="font-display text-[28px] tracking-wide leading-none" style="color:#E8253A">USA</span>
-          <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+        <div class="flex flex-col leading-none select-none mb-3 gap-1 w-fit">
+          <div class="flex items-baseline gap-1.5">
+            <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
+            <span class="font-display text-[28px] tracking-wide leading-none" style="color:#E8253A">USA</span>
+            <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+          </div>
+          <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos · Marketplace</span>
         </div>
         <p class="text-white/70 text-xs leading-relaxed font-medium">
           El mercado que Colombia necesitaba. Todo lo que llega de USA, en un solo lugar.
