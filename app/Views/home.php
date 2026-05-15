@@ -4,6 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z5M2GVB7L2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Z5M2GVB7L2');
+  </script>
+
   <!-- ── SEO primario ──────────────────────────────────────────────────── -->
   <title>FromUSA.com.co — Marketplace de importados USA en Colombia</title>
   <meta name="description" content="La plaza de comercio online más grande de Colombia para productos importados de USA. Celulares, Apple, tablets, consolas, audífonos y más. Vendedores reales, precios en COP, contacto por WhatsApp. Sin comisiones.">
@@ -124,9 +133,13 @@ $jsonLd = [
 echo '  <script type="application/ld+json">' . json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
 ?>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Rowdies:wght@400&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
@@ -138,8 +151,9 @@ echo '  <script type="application/ld+json">' . json_encode($jsonLd, JSON_UNESCAP
             usalight:'#F5F5F7'
           },
           fontFamily: {
-            display: ['Bebas Neue', 'sans-serif'],
-            body:    ['DM Sans', 'sans-serif']
+            display:     ['"Bebas Neue"', 'sans-serif'],
+            body:        ['"DM Sans"', 'sans-serif'],
+            marketplace: ['"Rowdies"', 'cursive']
           }
         }
       }
@@ -218,12 +232,15 @@ $categoryEmoji = [
         </svg>
         <!-- Texto logo -->
         <div class="flex flex-col leading-none select-none gap-1">
-          <div class="flex items-baseline gap-1.5">
-            <span class="text-white text-[11px] font-medium tracking-[0.18em] uppercase">from</span>
-            <span class="font-display text-[30px] tracking-wide leading-none" style="color:#E8253A;text-shadow:0 0 18px rgba(232,37,58,0.45)">USA</span>
-            <span class="text-white/75 text-[12px] font-medium">.com.co</span>
+          <div class="flex items-center gap-2.5">
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-white text-[11px] font-medium tracking-[0.18em] uppercase">from</span>
+              <span class="font-display text-[30px] tracking-wide leading-none" style="color:#E8253A;text-shadow:0 0 18px rgba(232,37,58,0.45)">USA</span>
+              <span class="text-white/75 text-[12px] font-medium">.com.co</span>
+            </div>
+            <span class="font-marketplace text-[9px] tracking-[0.22em] leading-none px-2 py-[5px] rounded-sm" style="color:#F0C040;border:1px solid rgba(240,192,64,0.45);background:rgba(240,192,64,0.08)">MARKETPLACE</span>
           </div>
-          <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos · Marketplace</span>
+          <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos</span>
         </div>
       </div>
       <button id="cart-btn" class="relative p-2" onclick="toggleCart()">

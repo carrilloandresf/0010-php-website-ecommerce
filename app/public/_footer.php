@@ -6,12 +6,15 @@
       <!-- Columna 1: Marca -->
       <div class="lg:col-span-1">
         <a href="/" class="flex flex-col leading-none select-none mb-3 w-fit gap-1">
-          <div class="flex items-baseline gap-1.5">
-            <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
-            <span class="font-display text-[28px] tracking-wide leading-none" style="color:#E8253A">USA</span>
-            <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+          <div class="flex items-center gap-2">
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
+              <span class="font-display text-[28px] tracking-wide leading-none" style="color:#E8253A">USA</span>
+              <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+            </div>
+            <span class="font-marketplace text-[8px] tracking-[0.2em] leading-none px-1.5 py-[4px] rounded-sm" style="color:#F0C040;border:1px solid rgba(240,192,64,0.4);background:rgba(240,192,64,0.08)">MARKETPLACE</span>
           </div>
-          <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos · Marketplace</span>
+          <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos</span>
         </a>
         <p class="text-white/70 text-xs leading-relaxed font-medium">
           El mercado que Colombia necesitaba.<br>Todo lo que llega de USA, en un solo lugar.

@@ -4,6 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z5M2GVB7L2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Z5M2GVB7L2');
+  </script>
+
   <title>Términos y Condiciones — FromUSA.com.co</title>
   <meta name="description" content="Términos y Condiciones de uso de FromUSA.com.co, plataforma tecnológica intermediaria operada por 111labs S.A.S. Conoce tus derechos y responsabilidades como comprador o vendedor.">
   <meta name="robots" content="index, follow">
@@ -19,8 +28,11 @@
   <meta property="og:title"       content="Términos y Condiciones — FromUSA.com.co">
   <meta property="og:description" content="Términos y Condiciones de uso de FromUSA.com.co, plataforma tecnológica intermediaria operada por 111labs S.A.S.">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Rowdies:wght@400&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
@@ -32,8 +44,9 @@
             usalight:'#F5F5F7'
           },
           fontFamily: {
-            display: ['"Bebas Neue"', 'sans-serif'],
-            body:    ['"DM Sans"', 'sans-serif'],
+            display:     ['"Bebas Neue"', 'sans-serif'],
+            body:        ['"DM Sans"', 'sans-serif'],
+            marketplace: ['"Rowdies"', 'cursive'],
           }
         }
       }
@@ -46,12 +59,15 @@
   <header class="bg-navy text-white sticky top-0 z-50">
     <div class="max-w-5xl mx-auto px-5 py-3 flex items-center justify-between">
       <a href="/" class="flex flex-col leading-none select-none gap-1">
-        <div class="flex items-baseline gap-1.5">
-          <span class="text-white/70 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
-          <span class="font-display text-[24px] tracking-wide leading-none" style="color:#E8253A">USA</span>
-          <span class="text-white/60 text-[11px] font-medium">.com.co</span>
+        <div class="flex items-center gap-2">
+          <div class="flex items-baseline gap-1.5">
+            <span class="text-white/70 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
+            <span class="font-display text-[24px] tracking-wide leading-none" style="color:#E8253A">USA</span>
+            <span class="text-white/60 text-[11px] font-medium">.com.co</span>
+          </div>
+          <span class="font-marketplace text-[8px] tracking-[0.2em] leading-none px-1.5 py-[4px] rounded-sm" style="color:#F0C040;border:1px solid rgba(240,192,64,0.4);background:rgba(240,192,64,0.08)">MARKETPLACE</span>
         </div>
-        <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos · Marketplace</span>
+        <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos</span>
       </a>
       <a href="/" class="text-white/70 hover:text-white text-sm transition flex items-center gap-1.5">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
@@ -123,7 +139,21 @@
 
       <!-- 3 -->
       <section class="mb-8">
-        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">3. Exención de responsabilidad sobre productos</h2>
+        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">3. Principio de libre mercado</h2>
+        <p class="text-gray-700 text-sm leading-relaxed mb-3">
+          FromUSA.com.co es una <strong>plaza abierta</strong> donde la oferta y la demanda se encuentran libremente. Los precios son determinados exclusivamente por cada vendedor, sin ninguna intervención, regulación ni sugerencia por parte de la plataforma.
+        </p>
+        <p class="text-gray-700 text-sm leading-relaxed mb-3">
+          El comprador y el vendedor negocian de forma <strong>directa y autónoma</strong>. La plataforma no fija precios mínimos ni máximos, no garantiza el precio más bajo del mercado y no actúa como árbitro en disputas de precio.
+        </p>
+        <p class="text-gray-700 text-sm leading-relaxed">
+          Este principio es parte fundamental de la propuesta de valor de FromUSA.com.co: un mercado libre, transparente y sin intermediarios, donde el valor lo define el encuentro natural entre quien vende y quien compra.
+        </p>
+      </section>
+
+      <!-- 4 -->
+      <section class="mb-8">
+        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">4. Exención de responsabilidad sobre productos</h2>
         <p class="text-gray-700 text-sm leading-relaxed mb-3">
           FromUSA.com.co <strong>no verifica, no certifica ni garantiza</strong>, en ningún caso:
         </p>
@@ -141,9 +171,9 @@
         </p>
       </section>
 
-      <!-- 4 -->
+      <!-- 5 -->
       <section class="mb-8">
-        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">4. Exención de responsabilidad sobre acuerdos entre partes</h2>
+        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">5. Exención de responsabilidad sobre acuerdos entre partes</h2>
         <p class="text-gray-700 text-sm leading-relaxed mb-3">
           Los compradores negocian y cierran tratos de forma voluntaria, directamente con los vendedores,
           a través de canales externos a la plataforma (principalmente WhatsApp).
@@ -159,9 +189,9 @@
         </p>
       </section>
 
-      <!-- 5 -->
+      <!-- 6 -->
       <section class="mb-8">
-        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">5. Responsabilidades de los vendedores</h2>
+        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">6. Responsabilidades de los vendedores</h2>
         <p class="text-gray-700 text-sm leading-relaxed mb-3">
           Los vendedores que publiquen o anuncien productos en la plataforma, al hacerlo, declaran bajo
           su responsabilidad que:
@@ -182,9 +212,9 @@
         </p>
       </section>
 
-      <!-- 6 -->
+      <!-- 7 -->
       <section class="mb-8">
-        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">6. Gratuidad del servicio</h2>
+        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">7. Gratuidad del servicio</h2>
         <p class="text-gray-700 text-sm leading-relaxed mb-3">
           El uso de la plataforma FromUSA.com.co es <strong>completamente gratuito</strong> tanto para
           vendedores como para compradores.
@@ -197,9 +227,9 @@
         </p>
       </section>
 
-      <!-- 7 -->
+      <!-- 8 -->
       <section class="mb-8">
-        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">7. Protección de datos personales</h2>
+        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">8. Protección de datos personales</h2>
         <p class="text-gray-700 text-sm leading-relaxed mb-3">
           El tratamiento de datos personales se rige por la <strong>Ley Estatutaria 1581 de 2012</strong>
           y sus decretos reglamentarios vigentes en la República de Colombia.
@@ -217,9 +247,9 @@
         </p>
       </section>
 
-      <!-- 8 -->
+      <!-- 9 -->
       <section class="mb-8">
-        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">8. Propiedad intelectual</h2>
+        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">9. Propiedad intelectual</h2>
         <p class="text-gray-700 text-sm leading-relaxed mb-3">
           El diseño, código fuente, nombre de dominio <strong>FromUSA.com.co</strong>, logotipos,
           contenido editorial y demás elementos que componen la plataforma son propiedad de
@@ -233,9 +263,9 @@
         </p>
       </section>
 
-      <!-- 9 -->
+      <!-- 10 -->
       <section class="mb-8">
-        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">9. Modificación y retiro de contenido</h2>
+        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">10. Modificación y retiro de contenido</h2>
         <p class="text-gray-700 text-sm leading-relaxed mb-3">
           <strong>FromUSA.com.co se reserva el derecho de:</strong>
         </p>
@@ -250,9 +280,9 @@
         </p>
       </section>
 
-      <!-- 10 -->
+      <!-- 11 -->
       <section class="mb-8">
-        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">10. Ley aplicable y jurisdicción</h2>
+        <h2 class="text-lg font-bold text-navy border-b border-gray-200 pb-2 mb-3">11. Ley aplicable y jurisdicción</h2>
         <p class="text-gray-700 text-sm leading-relaxed mb-3">
           Los presentes Términos y Condiciones se rigen e interpretan de conformidad con las leyes
           de la <strong>República de Colombia</strong>, incluyendo pero sin limitarse al Código de

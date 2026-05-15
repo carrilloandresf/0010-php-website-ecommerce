@@ -4,6 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z5M2GVB7L2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Z5M2GVB7L2');
+  </script>
+
   <title>¿Qué es FromUSA.com.co? El Marketplace de Importados de USA en Colombia</title>
   <meta name="description" content="FromUSA.com.co es el único marketplace colombiano dedicado exclusivamente a productos importados de Estados Unidos. Vendedores certificados, precios reales, tratos directos por WhatsApp. Sin comisiones.">
   <meta name="keywords" content="marketplace importados USA Colombia, productos americanos Colombia, comprar importados estados unidos colombia, tienda importados colombia, marketplace tecnología USA">
@@ -20,14 +29,17 @@
   <meta property="og:title"       content="¿Qué es FromUSA.com.co? El Marketplace de Importados de USA en Colombia">
   <meta property="og:description" content="El único marketplace colombiano creado exclusivamente para productos importados de Estados Unidos. Vendedores certificados, precios reales, sin comisiones.">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Rowdies:wght@400&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: { navy:'#0A1628', usared:'#B22234', usablue:'#3C3B6E', usalight:'#F5F5F7' },
-          fontFamily: { display:['"Bebas Neue"','sans-serif'], body:['"DM Sans"','sans-serif'] }
+          fontFamily: { display:['"Bebas Neue"','sans-serif'], body:['"DM Sans"','sans-serif'], marketplace:['"Rowdies"','cursive'] }
         }
       }
     }
@@ -56,12 +68,15 @@
   <header class="bg-navy text-white sticky top-0 z-50">
     <div class="max-w-5xl mx-auto px-5 py-3 flex items-center justify-between">
       <a href="/" class="flex flex-col leading-none select-none gap-1">
-        <div class="flex items-baseline gap-1.5">
-          <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
-          <span class="font-display text-[24px] tracking-wide leading-none" style="color:#E8253A">USA</span>
-          <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+        <div class="flex items-center gap-2">
+          <div class="flex items-baseline gap-1.5">
+            <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
+            <span class="font-display text-[24px] tracking-wide leading-none" style="color:#E8253A">USA</span>
+            <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+          </div>
+          <span class="font-marketplace text-[8px] tracking-[0.2em] leading-none px-1.5 py-[4px] rounded-sm" style="color:#F0C040;border:1px solid rgba(240,192,64,0.4);background:rgba(240,192,64,0.08)">MARKETPLACE</span>
         </div>
-        <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos · Marketplace</span>
+        <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos</span>
       </a>
       <a href="/" class="text-white/70 hover:text-white text-sm transition flex items-center gap-1.5">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
