@@ -766,9 +766,9 @@ function changeQty(id, delta) {
 }
 
 function sendWhatsApp() {
-  let msg = '¡Hola! 👋 Me interesan estos productos de FromUSA.com.co:\n\n';
+  let msg = '¡Hola! \u{1F44B} Me interesan estos productos de FromUSA.com.co:\n\n';
   cart.forEach(i => { msg += `• ${i.name} x${i.qty} — ${fmt(i.price * i.qty)}\n`; });
-  msg += `\n💰 Total: ${fmt(cart.reduce((s, i) => s + i.price * i.qty, 0))}\n\n¿Están disponibles?`;
+  msg += `\n\u{1F4B0} Total: ${fmt(cart.reduce((s, i) => s + i.price * i.qty, 0))}\n\n¿Están disponibles?`;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
