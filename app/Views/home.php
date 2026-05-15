@@ -14,9 +14,9 @@
   </script>
 
   <!-- ── SEO primario ──────────────────────────────────────────────────── -->
-  <title>FromUSA.com.co — Marketplace de importados USA en Colombia</title>
-  <meta name="description" content="La plaza de comercio online más grande de Colombia para productos importados de USA. Celulares, Apple, tablets, consolas, audífonos y más. Vendedores reales, precios en COP, contacto por WhatsApp. Sin comisiones.">
-  <meta name="keywords" content="marketplace importados colombia, productos importados usa colombia, comprar importados colombia, plaza comercio colombia, mercado importados usa, tecnología usa colombia, celulares importados colombia, iphone colombia, samsung colombia, fromusa, importados directo usa">
+  <title>Marketplace de Importados de USA en Colombia | iPhone, Samsung y más — FromUSA.com.co</title>
+  <meta name="description" content="El marketplace de importados de USA más completo de Colombia. iPhone barato, Samsung, audífonos y más — precios reales en COP, contacto directo por WhatsApp, sin intermediarios ni comisiones.">
+  <meta name="keywords" content="marketplace colombia, marketplace importados colombia, iphone barato colombia, iphone barato, iphone económico importado, samsung barato colombia, celulares baratos importados usa, comprar iphone de usa, importados directo usa, productos importados usa colombia, plaza comercio colombia, fromusa, celulares importados colombia, comprar iphone colombia">
   <meta name="author" content="FromUSA.com.co">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="googlebot" content="index, follow">
@@ -27,8 +27,8 @@
   <meta property="og:url"         content="https://fromusa.com.co/">
   <meta property="og:site_name"   content="FromUSA.com.co">
   <meta property="og:locale"      content="es_CO">
-  <meta property="og:title"       content="FromUSA.com.co — Marketplace de importados USA en Colombia">
-  <meta property="og:description" content="La plaza de comercio online más grande de Colombia para productos importados de USA. Conectamos compradores y vendedores. Precios en COP, trato directo por WhatsApp.">
+  <meta property="og:title"       content="Marketplace de Importados de USA en Colombia | iPhone, Samsung y más — FromUSA.com.co">
+  <meta property="og:description" content="El marketplace de importados de USA más completo de Colombia. iPhone barato, Samsung, audífonos y más — precios reales en COP, contacto directo por WhatsApp, sin comisiones.">
   <meta property="og:image"       content="https://fromusa.com.co/og-image.php">
   <meta property="og:image:secure_url" content="https://fromusa.com.co/og-image.php">
   <meta property="og:image:type"  content="image/png">
@@ -38,8 +38,8 @@
 
   <!-- ── Twitter / X Card ─────────────────────────────────────────────── -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="FromUSA.com.co — Marketplace de importados USA en Colombia">
-  <meta name="twitter:description" content="Marketplace colombiano de importados USA. Celulares, Apple, consolas, audífonos y más. Contacto directo por WhatsApp. Sin comisiones.">
+  <meta name="twitter:title"       content="Marketplace de Importados de USA en Colombia | iPhone, Samsung y más — FromUSA.com.co">
+  <meta name="twitter:description" content="iPhone barato, Samsung y más importados de USA en Colombia. Precios reales en COP, contacto directo por WhatsApp. Sin comisiones. FromUSA.com.co">
   <meta name="twitter:image"       content="https://fromusa.com.co/og-image.php">
   <meta name="twitter:image:alt"   content="FromUSA.com.co">
 
@@ -280,12 +280,12 @@ $categoryEmoji = [
   <!-- ── Main ─────────────────────────────────────── -->
   <main class="flex-1" id="main-content">
 
-    <!-- Título sección productos -->
-    <section class="px-4 md:px-6 pb-3 pt-1">
+    <!-- Título catálogo -->
+    <section class="px-4 md:px-6 pb-3 pt-3">
       <div class="flex items-end justify-between">
         <div>
-          <h2 class="font-bold text-2xl leading-tight">Productos</h2>
-          <p class="text-xs text-gray-400 font-medium mt-0.5">Importados directo de USA</p>
+          <h1 class="font-bold text-2xl leading-tight">Importados de USA</h1>
+          <p class="text-xs text-gray-400 font-medium mt-0.5">Marketplace Colombia · iPhone · Samsung · Audífonos y más</p>
         </div>
         <span class="text-xs text-usared font-semibold bg-red-50 px-2.5 py-1 rounded-full">
           <?= count($products) ?> artículos
@@ -379,14 +379,17 @@ $categoryEmoji = [
 
       <!-- Columna 1: Marca -->
       <div class="lg:col-span-1">
-        <div class="flex flex-col leading-none select-none mb-3 gap-1 w-fit">
-          <div class="flex items-baseline gap-1.5">
-            <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
-            <span class="font-display text-[28px] tracking-wide leading-none" style="color:#E8253A">USA</span>
-            <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+        <a href="/" class="flex flex-col leading-none select-none mb-3 w-fit gap-1">
+          <div class="flex items-center gap-2">
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-white/60 text-[10px] font-medium tracking-[0.18em] uppercase">from</span>
+              <span class="font-display text-[28px] tracking-wide leading-none" style="color:#E8253A">USA</span>
+              <span class="text-white/50 text-[11px] font-medium">.com.co</span>
+            </div>
+            <span class="font-marketplace text-[8px] tracking-[0.2em] leading-none px-1.5 py-[4px] rounded-sm" style="color:#F0C040;border:1px solid rgba(240,192,64,0.4);background:rgba(240,192,64,0.08)">MARKETPLACE</span>
           </div>
-          <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos · Marketplace</span>
-        </div>
+          <span class="text-white/35 text-[8px] tracking-[0.2em] uppercase font-medium">De allá · Para acá · Sin rodeos</span>
+        </a>
         <p class="text-white/70 text-xs leading-relaxed font-medium">
           El mercado que Colombia necesitaba. Todo lo que llega de USA, en un solo lugar.
         </p>
@@ -766,9 +769,9 @@ function changeQty(id, delta) {
 }
 
 function sendWhatsApp() {
-  let msg = '¡Hola! \u{1F44B} Me interesan estos productos de FromUSA.com.co:\n\n';
+  let msg = '*¡Hola!* Me interesan estos productos de FromUSA.com.co:\n\n';
   cart.forEach(i => { msg += `• ${i.name} x${i.qty} — ${fmt(i.price * i.qty)}\n`; });
-  msg += `\n\u{1F4B0} Total: ${fmt(cart.reduce((s, i) => s + i.price * i.qty, 0))}\n\n¿Están disponibles?`;
+  msg += `\n*Total: ${fmt(cart.reduce((s, i) => s + i.price * i.qty, 0))}*\n\n¿Están disponibles?`;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
