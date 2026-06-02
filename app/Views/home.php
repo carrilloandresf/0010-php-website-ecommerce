@@ -227,6 +227,19 @@ echo '  <script type="application/ld+json">' . json_encode($jsonLd, JSON_UNESCAP
     .categories-scroll::-webkit-scrollbar { display: none; }
     .slide-up { animation: slideUp 0.35s ease; }
     @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    /* Toast de confirmación */
+    #copy-toast {
+      position: fixed; bottom: 5rem; left: 50%; transform: translateX(-50%) translateY(12px);
+      background: #1a2e1a; color: #fff; font-size: 0.875rem; font-weight: 600;
+      padding: 0.65rem 1.1rem; border-radius: 9999px;
+      display: flex; align-items: center; gap: 0.5rem;
+      opacity: 0; pointer-events: none; z-index: 9999;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      white-space: nowrap; box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+    #copy-toast.show {
+      opacity: 1; transform: translateX(-50%) translateY(0);
+    }
     .card-slides { transition: transform 0.5s ease; }
     /* Modal producto */
     #product-modal { display: none; }
@@ -667,6 +680,14 @@ $categoryEmoji = [
   </div>
 
 
+  <!-- ── Toast copiar enlace ──────────────────────── -->
+  <div id="copy-toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6L9 17l-5-5"/>
+    </svg>
+    Enlace copiado
+  </div>
+
   <!-- ── WhatsApp float ────────────────────────────── -->
   <a
     href="https://wa.me/573112866614?text=<?= urlencode('¡Hola! Vi sus productos importados de USA y me gustaría saber más 🇺🇸') ?>"
@@ -1016,19 +1037,13 @@ function closeModal() {
   history.replaceState({}, '', window.location.pathname);
 }
 
+let _toastTimer = null;
 function copyProductLink() {
   navigator.clipboard.writeText(window.location.href).then(() => {
-    const btn   = document.getElementById('modal-share-btn');
-    const label = document.getElementById('modal-share-label');
-    // feedback visual en cualquier tamaño
-    btn.classList.add('border-green-500', 'text-green-600');
-    btn.classList.remove('border-gray-200', 'text-gray-500');
-    if (label) label.textContent = '¡Copiado!';
-    setTimeout(() => {
-      btn.classList.remove('border-green-500', 'text-green-600');
-      btn.classList.add('border-gray-200', 'text-gray-500');
-      if (label) label.textContent = 'Copiar enlace';
-    }, 2000);
+    const toast = document.getElementById('copy-toast');
+    toast.classList.add('show');
+    clearTimeout(_toastTimer);
+    _toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
   });
 }
 
