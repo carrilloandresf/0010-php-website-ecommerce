@@ -1,3 +1,45 @@
+<?php
+// ── Open Graph dinámico por producto ─────────────────────────────────────────
+$_siteUrl   = 'https://fromusa.com.co';
+$_prodId    = isset($_GET['producto']) ? (int)$_GET['producto'] : 0;
+$_ogProduct = null;
+if ($_prodId > 0) {
+    foreach ($products as $_p) {
+        if ((int)$_p['id'] === $_prodId) { $_ogProduct = $_p; break; }
+    }
+}
+
+if ($_ogProduct !== null) {
+    $_price    = '$' . number_format((int)$_ogProduct['price'], 0, ',', '.');
+    $_ogTitle  = $_ogProduct['name'] . ' — ' . $_price . ' COP | FromUSA.com.co';
+    $_ogParts  = [$_ogProduct['name']];
+    if (!empty($_ogProduct['capacity']))  $_ogParts[] = $_ogProduct['capacity'];
+    if (!empty($_ogProduct['brand']))     $_ogParts[] = 'Marca: ' . $_ogProduct['brand'];
+    $_ogParts[] = 'Precio: ' . $_price . ' COP';
+    if (!empty($_ogProduct['description'])) $_ogParts[] = $_ogProduct['description'];
+    $_ogParts[] = 'Importado de USA. Contáctanos por WhatsApp.';
+    $_ogDesc   = implode('. ', $_ogParts);
+    $_ogUrl    = $_siteUrl . '/?producto=' . $_ogProduct['id'];
+    $_ogImage  = !empty($_ogProduct['images'])
+        ? $_siteUrl . $_ogProduct['images'][0]
+        : $_siteUrl . '/og-image.php';
+    $_ogImgType   = 'image/jpeg';
+    $_ogImgWidth  = null;
+    $_ogImgHeight = null;
+    $_ogType      = 'product';
+    $_canonical   = $_ogUrl;
+} else {
+    $_ogTitle     = 'Marketplace de Importados de USA en Colombia | iPhone, Samsung y más — FromUSA.com.co';
+    $_ogDesc      = 'El marketplace de importados de USA más completo de Colombia. iPhone barato, Samsung, audífonos y más — precios reales en COP, contacto directo por WhatsApp, sin comisiones.';
+    $_ogUrl       = $_siteUrl . '/';
+    $_ogImage     = $_siteUrl . '/og-image.php';
+    $_ogImgType   = 'image/png';
+    $_ogImgWidth  = '1200';
+    $_ogImgHeight = '630';
+    $_ogType      = 'website';
+    $_canonical   = $_siteUrl . '/';
+}
+?>
 <!doctype html>
 <html lang="es" prefix="og: https://ogp.me/ns#" class="h-full">
 <head>
@@ -14,34 +56,38 @@
   </script>
 
   <!-- ── SEO primario ──────────────────────────────────────────────────── -->
-  <title>Marketplace de Importados de USA en Colombia | iPhone, Samsung y más — FromUSA.com.co</title>
-  <meta name="description" content="El marketplace de importados de USA más completo de Colombia. iPhone barato, Samsung, audífonos y más — precios reales en COP, contacto directo por WhatsApp, sin intermediarios ni comisiones.">
+  <title><?= htmlspecialchars($_ogTitle) ?></title>
+  <meta name="description" content="<?= htmlspecialchars($_ogDesc) ?>">
+  <?php if ($_ogProduct === null): ?>
   <meta name="keywords" content="marketplace colombia, marketplace importados colombia, iphone barato colombia, iphone barato, iphone económico importado, samsung barato colombia, celulares baratos importados usa, comprar iphone de usa, importados directo usa, productos importados usa colombia, plaza comercio colombia, fromusa, celulares importados colombia, comprar iphone colombia">
+  <?php endif; ?>
   <meta name="author" content="FromUSA.com.co">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="googlebot" content="index, follow">
-  <link rel="canonical" href="https://fromusa.com.co/">
+  <link rel="canonical" href="<?= htmlspecialchars($_canonical) ?>">
 
   <!-- ── Open Graph (Facebook, LinkedIn, WhatsApp, Telegram) ────────────── -->
-  <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://fromusa.com.co/">
+  <meta property="og:type"        content="<?= $_ogType ?>">
+  <meta property="og:url"         content="<?= htmlspecialchars($_ogUrl) ?>">
   <meta property="og:site_name"   content="FromUSA.com.co">
   <meta property="og:locale"      content="es_CO">
-  <meta property="og:title"       content="Marketplace de Importados de USA en Colombia | iPhone, Samsung y más — FromUSA.com.co">
-  <meta property="og:description" content="El marketplace de importados de USA más completo de Colombia. iPhone barato, Samsung, audífonos y más — precios reales en COP, contacto directo por WhatsApp, sin comisiones.">
-  <meta property="og:image"       content="https://fromusa.com.co/og-image.php">
-  <meta property="og:image:secure_url" content="https://fromusa.com.co/og-image.php">
-  <meta property="og:image:type"  content="image/png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt"   content="FromUSA.com.co — Tecnología importada desde USA">
+  <meta property="og:title"       content="<?= htmlspecialchars($_ogTitle) ?>">
+  <meta property="og:description" content="<?= htmlspecialchars($_ogDesc) ?>">
+  <meta property="og:image"       content="<?= htmlspecialchars($_ogImage) ?>">
+  <meta property="og:image:secure_url" content="<?= htmlspecialchars($_ogImage) ?>">
+  <meta property="og:image:type"  content="<?= $_ogImgType ?>">
+  <?php if ($_ogImgWidth): ?>
+  <meta property="og:image:width"  content="<?= $_ogImgWidth ?>">
+  <meta property="og:image:height" content="<?= $_ogImgHeight ?>">
+  <?php endif; ?>
+  <meta property="og:image:alt"   content="<?= htmlspecialchars($_ogProduct ? $_ogProduct['name'] . ' — FromUSA.com.co' : 'FromUSA.com.co — Tecnología importada desde USA') ?>">
 
   <!-- ── Twitter / X Card ─────────────────────────────────────────────── -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="Marketplace de Importados de USA en Colombia | iPhone, Samsung y más — FromUSA.com.co">
-  <meta name="twitter:description" content="iPhone barato, Samsung y más importados de USA en Colombia. Precios reales en COP, contacto directo por WhatsApp. Sin comisiones. FromUSA.com.co">
-  <meta name="twitter:image"       content="https://fromusa.com.co/og-image.php">
-  <meta name="twitter:image:alt"   content="FromUSA.com.co">
+  <meta name="twitter:title"       content="<?= htmlspecialchars($_ogTitle) ?>">
+  <meta name="twitter:description" content="<?= htmlspecialchars($_ogDesc) ?>">
+  <meta name="twitter:image"       content="<?= htmlspecialchars($_ogImage) ?>">
+  <meta name="twitter:image:alt"   content="<?= htmlspecialchars($_ogProduct ? $_ogProduct['name'] : 'FromUSA.com.co') ?>">
 
   <!-- ── PWA / Dispositivos móviles ────────────────────────────────────── -->
   <link rel="manifest" href="/manifest.json">
@@ -55,7 +101,7 @@
 
   <!-- ── Datos estructurados JSON-LD (Google, Bing, IAs) ───────────────── -->
 <?php
-$siteUrl = 'https://fromusa.com.co';
+$siteUrl = $_siteUrl;
 $topProducts = array_slice($products, 0, 20);
 $jsonLd = [
     '@context' => 'https://schema.org',
@@ -165,13 +211,15 @@ echo '  <script type="application/ld+json">' . json_encode($jsonLd, JSON_UNESCAP
     @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
     .product-card {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.2s;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.25,0.46,0.45,0.94),
+                  transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94),
+                  box-shadow 0.2s;
       cursor: pointer;
     }
     .product-card.visible { opacity: 1; transform: translateY(0); }
-    .product-card:active { transform: scale(0.97) !important; }
-    .product-card:hover { box-shadow: 0 6px 28px rgba(0,0,0,0.10); }
+    .product-card.visible:active { transform: scale(0.97) !important; }
+    .product-card.visible:hover { box-shadow: 0 6px 28px rgba(0,0,0,0.10); }
     .fade-in { animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
     .category-pill { scroll-snap-align: start; }
@@ -182,8 +230,13 @@ echo '  <script type="application/ld+json">' . json_encode($jsonLd, JSON_UNESCAP
     .card-slides { transition: transform 0.5s ease; }
     /* Modal producto */
     #product-modal { display: none; }
-    #product-modal.open { display: flex; align-items: center; justify-content: center; }
-    @media (min-width: 768px) { #product-modal.open { align-items: center; } }
+    #product-modal.open { display: flex; align-items: flex-end; justify-content: center; }
+    @media (min-width: 768px) {
+      #product-modal.open { align-items: center; }
+    }
+    @supports (padding: env(safe-area-inset-bottom)) {
+      .modal-actions { padding-bottom: max(1.25rem, env(safe-area-inset-bottom)); }
+    }
   </style>
 </head>
 <body class="bg-usalight font-body text-navy">
@@ -309,7 +362,7 @@ $categoryEmoji = [
           $showBadge = $discount >= 10;
         ?>
         <div
-          class="product-card bg-white rounded-2xl p-3.5 shadow-[0_2px_16px_rgba(0,0,0,0.07)] relative fade-in"
+          class="product-card bg-white rounded-2xl p-3.5 shadow-[0_2px_16px_rgba(0,0,0,0.07)] relative"
           data-category="<?= htmlspecialchars($p['category']) ?>"
           data-brand="<?= htmlspecialchars($p['brand']) ?>"
           data-id="<?= $p['id'] ?>"
@@ -507,49 +560,60 @@ $categoryEmoji = [
   <div id="product-modal" class="fixed inset-0 z-[200]">
     <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
 
+    <!-- Bottom sheet (mobile) / Centered dialog (desktop) -->
     <div id="modal-panel"
-      class="relative z-10 bg-white w-[85%] rounded-3xl
+      class="relative z-10 bg-white
+             w-full rounded-t-3xl
              md:rounded-2xl md:max-w-4xl md:w-[92%]
-             max-h-[92vh] md:max-h-[88vh]
+             max-h-[90vh] md:max-h-[88vh]
              flex flex-col md:flex-row overflow-hidden slide-up">
 
-      <!-- Columna izquierda: galería -->
+      <!-- Handle — mobile only -->
+      <div class="md:hidden flex justify-center pt-2.5 pb-0 flex-shrink-0">
+        <div class="w-9 h-1 bg-gray-300 rounded-full"></div>
+      </div>
+
+      <!-- Columna izquierda (desktop) / Imagen compacta (mobile) -->
       <div class="md:w-[42%] md:flex-shrink-0 flex flex-col md:border-r md:border-gray-100">
 
-        <div class="flex items-center justify-between px-4 pt-4 pb-2 flex-shrink-0 md:hidden">
+        <!-- Header mobile: marca + cerrar -->
+        <div class="flex items-center justify-between px-4 pt-2 pb-1.5 flex-shrink-0 md:hidden">
           <span id="modal-brand-badge" class="text-xs font-bold text-usablue uppercase tracking-wide"></span>
           <button onclick="closeModal()" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
 
+        <!-- Imagen: altura fija en mobile, flex-1 en desktop -->
         <div class="relative mx-4 md:mx-0 rounded-2xl md:rounded-none overflow-hidden bg-white
-                    aspect-square md:aspect-auto md:flex-1">
+                    h-52 md:h-auto md:aspect-auto md:flex-1">
           <img id="modal-main-img" src="" alt="" class="w-full h-full object-contain">
           <div id="modal-emoji-fallback"
             class="hidden absolute inset-0 bg-gray-50 items-center justify-center text-6xl">
           </div>
           <button id="modal-prev" onclick="modalNav(-1)"
-            class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/25 text-white w-9 h-9 rounded-full
+            class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/25 text-white w-8 h-8 rounded-full
                    flex items-center justify-center hidden hover:bg-black/45 transition">
-            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
           </button>
           <button id="modal-next" onclick="modalNav(1)"
-            class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/25 text-white w-9 h-9 rounded-full
+            class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/25 text-white w-8 h-8 rounded-full
                    flex items-center justify-center hidden hover:bg-black/45 transition">
-            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </button>
           <div id="modal-dots"
             class="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 pointer-events-none">
           </div>
         </div>
 
-        <div id="modal-thumbs" class="flex gap-2 px-4 py-3 overflow-x-auto flex-shrink-0"></div>
+        <!-- Miniaturas -->
+        <div id="modal-thumbs" class="flex gap-2 px-4 py-2 md:py-3 overflow-x-auto flex-shrink-0"></div>
       </div>
 
-      <!-- Columna derecha: información -->
-      <div class="flex-1 flex flex-col overflow-hidden">
+      <!-- Columna derecha: info + botones -->
+      <div class="flex-1 flex flex-col overflow-hidden min-h-0">
 
+        <!-- Header desktop: marca + cerrar -->
         <div class="hidden md:flex items-center justify-between px-6 pt-5 pb-3 flex-shrink-0">
           <span id="modal-brand-badge-desk" class="text-sm font-bold text-usablue uppercase tracking-wide"></span>
           <button onclick="closeModal()"
@@ -558,36 +622,47 @@ $categoryEmoji = [
           </button>
         </div>
 
-        <div class="flex-1 overflow-y-auto px-4 md:px-6 pb-6 pt-3 md:pt-0">
-          <h2 id="modal-name" class="font-bold text-xl leading-snug mb-0.5"></h2>
-          <p id="modal-model" class="text-sm text-gray-500 mb-1"></p>
-          <p id="modal-meta" class="text-xs text-gray-400 mb-5"></p>
+        <!-- Contenido scrollable — se expande, empuja los botones al fondo -->
+        <div class="flex-1 overflow-y-auto min-h-0 px-4 md:px-6 pt-2 pb-2 md:pt-0">
+          <h2 id="modal-name" class="font-bold text-lg md:text-xl leading-snug mb-0.5"></h2>
+          <p id="modal-model" class="text-sm text-gray-500 mb-0.5"></p>
+          <p id="modal-meta" class="text-xs text-gray-400 mb-3"></p>
 
-          <div class="mb-2">
-            <div id="modal-prices" class="flex flex-wrap items-end gap-2 mb-1"></div>
+          <div class="mb-1">
+            <div id="modal-prices" class="flex flex-wrap items-end gap-2 mb-0.5"></div>
             <p id="modal-usd" class="text-xs text-gray-400"></p>
           </div>
 
-          <div id="modal-stock" class="flex items-center gap-1.5 text-xs font-semibold mt-3 mb-5"></div>
+          <div id="modal-stock" class="flex items-center gap-1.5 text-xs font-semibold mt-2 mb-3"></div>
 
-          <hr class="mb-5 border-gray-100">
+          <hr class="mb-3 border-gray-100">
 
-          <p id="modal-desc" class="text-sm text-gray-600 leading-relaxed mb-6"></p>
-
-          <button id="modal-add-btn"
-            class="w-full bg-navy text-white font-bold py-3.5 rounded-2xl
-                   flex items-center justify-center gap-2 active:bg-usablue transition text-sm">
-            <i data-lucide="plus" class="w-4 h-4"></i> Agregar al carrito
-          </button>
-          <button id="modal-share-btn" onclick="copyProductLink()"
-            class="mt-3 w-full border border-gray-200 text-gray-500 font-semibold py-3 rounded-2xl
-                   flex items-center justify-center gap-2 hover:border-navy hover:text-navy transition text-sm">
-            <i data-lucide="share-2" class="w-4 h-4"></i>
-            <span id="modal-share-label">Copiar enlace</span>
-          </button>
+          <p id="modal-desc" class="text-sm text-gray-600 leading-relaxed pb-1"></p>
         </div>
-      </div>
 
+        <!-- Botones — siempre visibles al fondo, nunca se scrollean -->
+        <div class="modal-actions flex-shrink-0 bg-white border-t border-gray-100
+                    px-4 md:px-6 pt-3 pb-5 md:pb-6">
+          <div class="flex gap-3 md:flex-col">
+            <button id="modal-add-btn"
+              class="flex-1 bg-navy text-white font-bold py-3.5 rounded-2xl
+                     flex items-center justify-center gap-2 active:bg-usablue transition text-sm
+                     md:w-full">
+              <i data-lucide="plus" class="w-4 h-4 flex-shrink-0"></i>
+              <span>Agregar al carrito</span>
+            </button>
+            <button id="modal-share-btn" onclick="copyProductLink()"
+              class="flex-shrink-0 border border-gray-200 text-gray-500 font-semibold
+                     py-3.5 px-4 rounded-2xl flex items-center justify-center gap-2
+                     hover:border-navy hover:text-navy transition text-sm
+                     md:w-full md:flex-none">
+              <i data-lucide="share-2" class="w-4 h-4 flex-shrink-0"></i>
+              <span id="modal-share-label" class="hidden md:inline">Copiar enlace</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -667,7 +742,7 @@ function applyFilters() {
 // ── Animación escalonada inicial ──────────────────
 function initCardAnimations() {
   const cards = [...document.querySelectorAll('.product-card')];
-  cards.forEach((card, i) => { card.style.transitionDelay = (i * 90) + 'ms'; });
+  cards.forEach((card, i) => { card.style.transitionDelay = (i * 130) + 'ms'; });
   requestAnimationFrame(() => requestAnimationFrame(() => {
     cards.forEach(card => card.classList.add('visible'));
   }));
@@ -943,9 +1018,17 @@ function closeModal() {
 
 function copyProductLink() {
   navigator.clipboard.writeText(window.location.href).then(() => {
+    const btn   = document.getElementById('modal-share-btn');
     const label = document.getElementById('modal-share-label');
-    label.textContent = '¡Enlace copiado!';
-    setTimeout(() => { label.textContent = 'Copiar enlace'; }, 2000);
+    // feedback visual en cualquier tamaño
+    btn.classList.add('border-green-500', 'text-green-600');
+    btn.classList.remove('border-gray-200', 'text-gray-500');
+    if (label) label.textContent = '¡Copiado!';
+    setTimeout(() => {
+      btn.classList.remove('border-green-500', 'text-green-600');
+      btn.classList.add('border-gray-200', 'text-gray-500');
+      if (label) label.textContent = 'Copiar enlace';
+    }, 2000);
   });
 }
 
