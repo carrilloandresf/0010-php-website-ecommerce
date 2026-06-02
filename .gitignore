@@ -1,8 +1,13 @@
-# Datos de inventario — se gestionan en producción via admin panel
-data/inventory.json
-
-# Imágenes de productos — se gestionan en producción via admin panel
-app/public/img/
+# Imágenes subidas en producción via admin panel (archivos NUEVOS, no los iniciales)
+# Los archivos iniciales sí están en git para bootstrap del servidor.
+# En producción, después del primer git pull, proteger con:
+#   git ls-files app/public/img/ | xargs git update-index --skip-worktree
+app/public/img/*.jpg
+app/public/img/*.jpeg
+app/public/img/*.png
+app/public/img/*.webp
+app/public/img/*.JPG
+app/public/img/*.WEBP
 
 # Artefactos de OS/editor
 .DS_Store
