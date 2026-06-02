@@ -19,6 +19,14 @@ function writeInventory(array $data): bool {
     return (bool) file_put_contents(DATA_PATH, $json, LOCK_EX);
 }
 
+function makeSlug(string $text): string {
+    $text = mb_strtolower($text, 'UTF-8');
+    $map  = ['á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','ü'=>'u','ñ'=>'n','ä'=>'a','ö'=>'o'];
+    $text = strtr($text, $map);
+    $text = preg_replace('/[^a-z0-9]+/', '_', $text);
+    return trim($text, '_');
+}
+
 function getProductImages(int $indice): array {
     $files = glob(IMG_DIR . $indice . '[_.-]*') ?: [];
     usort($files, function (string $a, string $b) use ($indice): int {
@@ -31,13 +39,24 @@ function getProductImages(int $indice): array {
 
 function nextImageSeq(int $indice): int {
     $files = glob(IMG_DIR . $indice . '[_.-]*') ?: [];
-    $max = 0;
+    $max   = 0;
     foreach ($files as $f) {
         if (preg_match('/^' . $indice . '[_.\-](\d+)/i', basename($f), $m)) {
             $max = max($max, (int)$m[1]);
         }
     }
     return $max + 1;
+}
+
+function writeErrorParams(string $path): string {
+    $writable = is_writable($path) ? 'sí' : 'NO';
+    $owner    = function_exists('posix_getpwuid') ? (posix_getpwuid(fileowner($path))['name'] ?? '?') : '?';
+    $process  = function_exists('posix_getpwuid') ? (posix_getpwuid(posix_geteuid())['name'] ?? '?') : '?';
+    return '?write_error=1'
+        . '&file='     . urlencode($path)
+        . '&writable=' . urlencode($writable)
+        . '&owner='    . urlencode($owner)
+        . '&process='  . urlencode($process);
 }
 
 // ── Actions ───────────────────────────────────────────────────────────────────
@@ -51,7 +70,7 @@ if ($action === 'logout') {
     exit;
 }
 
-// Auth check — si no autenticado, manejar login o mostrar form
+// Auth check
 if (empty($_SESSION['admin_auth'])) {
     $loginError = '';
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
@@ -63,7 +82,6 @@ if (empty($_SESSION['admin_auth'])) {
         }
         $loginError = 'Contraseña incorrecta.';
     }
-    // Mostrar pantalla de login
     ?>
 <!doctype html>
 <html lang="es">
@@ -105,7 +123,7 @@ if (empty($_SESSION['admin_auth'])) {
 
 // ── Acciones autenticadas ─────────────────────────────────────────────────────
 
-$savedId    = isset($_GET['saved']) ? (int)$_GET['saved'] : 0;
+$savedId    = isset($_GET['saved'])    ? (int)$_GET['saved'] : 0;
 $writeError = !empty($_GET['write_error']);
 $errorInfo  = $writeError ? [
     'file'     => $_GET['file']     ?? DATA_PATH,
@@ -113,21 +131,61 @@ $errorInfo  = $writeError ? [
     'owner'    => $_GET['owner']    ?? '?',
     'process'  => $_GET['process']  ?? '?',
 ] : [];
-$flashMsg   = '';
 
-// Editable fields
 $editableFields = [
-    'nombre_web'         => ['label' => 'Nombre web',        'type' => 'text'],
-    'marca'              => ['label' => 'Marca',              'type' => 'text'],
-    'modelo'             => ['label' => 'Modelo',             'type' => 'text'],
-    'categoria'          => ['label' => 'Categoría',          'type' => 'text'],
-    'capacidad'          => ['label' => 'Capacidad',          'type' => 'text'],
-    'precio_venta_cop'   => ['label' => 'Precio venta (COP)', 'type' => 'number'],
-    'precio_mercado_cop' => ['label' => 'Precio mercado (COP)','type' => 'number'],
-    'precio_usd'         => ['label' => 'Precio USD',         'type' => 'number'],
-    'cantidad'           => ['label' => 'Stock',              'type' => 'number'],
-    'descripcion'        => ['label' => 'Descripción',        'type' => 'textarea'],
+    'nombre_web'         => ['label' => 'Nombre web',         'type' => 'text',     'required' => true],
+    'marca'              => ['label' => 'Marca',               'type' => 'text',     'required' => false],
+    'modelo'             => ['label' => 'Modelo',              'type' => 'text',     'required' => false],
+    'categoria'          => ['label' => 'Categoría',           'type' => 'text',     'required' => false],
+    'capacidad'          => ['label' => 'Capacidad',           'type' => 'text',     'required' => false],
+    'precio_venta_cop'   => ['label' => 'Precio venta (COP)',  'type' => 'number',   'required' => false],
+    'precio_mercado_cop' => ['label' => 'Precio mercado (COP)','type' => 'number',   'required' => false],
+    'precio_usd'         => ['label' => 'Precio USD',          'type' => 'number',   'required' => false],
+    'cantidad'           => ['label' => 'Stock',               'type' => 'number',   'required' => false],
+    'descripcion'        => ['label' => 'Descripción',         'type' => 'textarea', 'required' => false],
 ];
+
+// ADD PRODUCT
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'add') {
+    $data = readInventory();
+
+    $maxIndice = 0;
+    foreach ($data['productos'] as $p) {
+        $maxIndice = max($maxIndice, (int)($p['indice'] ?? 0));
+    }
+    $newIndice = $maxIndice + 1;
+
+    $nombreWeb = trim($_POST['nombre_web'] ?? 'Nuevo producto');
+    $baseSlug  = makeSlug($nombreWeb) ?: 'producto_' . $newIndice;
+    $slug      = $baseSlug;
+    $i         = 2;
+    while (isset($data['productos'][$slug])) {
+        $slug = $baseSlug . '_' . $i++;
+    }
+
+    $newProduct = ['indice' => $newIndice, 'slug' => $slug];
+    foreach ($editableFields as $field => $meta) {
+        $val = trim($_POST[$field] ?? '');
+        if (in_array($field, ['precio_venta_cop', 'precio_mercado_cop', 'cantidad'], true)) {
+            $newProduct[$field] = $val !== '' ? (int)$val : 0;
+        } elseif ($field === 'precio_usd') {
+            $newProduct[$field] = $val !== '' ? (float)$val : null;
+        } else {
+            $newProduct[$field] = $val !== '' ? $val : null;
+        }
+    }
+    $newProduct['precio_web'] = $newProduct['precio_venta_cop'] ?? 0;
+
+    $data['productos'][$slug]    = $newProduct;
+    $data['orden_productos'][]   = $slug;
+
+    if (writeInventory($data)) {
+        header('Location: /admin/panel?saved=' . $newIndice . '#prod-' . $newIndice);
+    } else {
+        header('Location: /admin/panel' . writeErrorParams(DATA_PATH));
+    }
+    exit;
+}
 
 // UPDATE PRODUCT
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
@@ -146,7 +204,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
                     $p[$field] = $val !== '' ? $val : null;
                 }
             }
-            // Sync precio_web con precio_venta_cop
             if (isset($p['precio_venta_cop'])) {
                 $p['precio_web'] = $p['precio_venta_cop'];
             }
@@ -158,15 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
     if (writeInventory($data)) {
         header('Location: /admin/panel?saved=' . $id . '#prod-' . $id);
     } else {
-        $path    = DATA_PATH;
-        $writable = is_writable($path) ? 'sí' : 'NO';
-        $owner   = function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($path))['name'] ?? '?' : '?';
-        $process = function_exists('posix_getpwuid') ? posix_getpwuid(posix_geteuid())['name'] ?? '?' : '?';
-        header('Location: /admin/panel?write_error=1&file=' . urlencode($path)
-            . '&writable=' . urlencode($writable)
-            . '&owner=' . urlencode($owner)
-            . '&process=' . urlencode($process)
-            . '#prod-' . $id);
+        header('Location: /admin/panel' . writeErrorParams(DATA_PATH) . '#prod-' . $id);
     }
     exit;
 }
@@ -203,14 +252,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'delete_image') {
 
 // ── Cargar datos del dashboard ────────────────────────────────────────────────
 
-$data     = readInventory();
-$products = [];
+$data       = readInventory();
+$products   = [];
+$categories = [];
 foreach (($data['orden_productos'] ?? array_keys($data['productos'] ?? [])) as $key) {
     if (!isset($data['productos'][$key])) continue;
     $p            = $data['productos'][$key];
     $p['_images'] = getProductImages((int)$p['indice']);
     $products[]   = $p;
+    $cat = strtolower(trim($p['categoria'] ?? ''));
+    if ($cat) $categories[$cat] = true;
 }
+ksort($categories);
 ?>
 <!doctype html>
 <html lang="es">
@@ -230,6 +283,9 @@ foreach (($data['orden_productos'] ?? array_keys($data['productos'] ?? [])) as $
     details > summary::-webkit-details-marker { display: none; }
     details[open] .chevron { transform: rotate(180deg); }
     .chevron { transition: transform 0.2s; }
+    .prod-row.hidden-filter { display: none; }
+    #new-product-form { display: none; }
+    #new-product-form.open { display: block; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -239,10 +295,10 @@ foreach (($data['orden_productos'] ?? array_keys($data['productos'] ?? [])) as $
   <div class="font-black text-xl tracking-widest" style="font-family:'Bebas Neue',sans-serif">
     FROMUSA <span class="text-xs font-normal tracking-normal opacity-60 ml-2">ADMIN</span>
   </div>
-  <a href="/admin/panel?action=logout"
-    class="text-xs bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition">
-    Cerrar sesión
-  </a>
+  <div class="flex items-center gap-3">
+    <a href="/" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded-lg transition hidden sm:block">Ver sitio →</a>
+    <a href="/admin/panel?action=logout" class="text-xs bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition">Cerrar sesión</a>
+  </div>
 </header>
 
 <!-- Flash éxito -->
@@ -274,27 +330,119 @@ foreach (($data['orden_productos'] ?? array_keys($data['productos'] ?? [])) as $
 <?php endif; ?>
 
 <!-- Contenido principal -->
-<main class="max-w-5xl mx-auto px-4 py-8">
+<main class="max-w-5xl mx-auto px-4 py-6">
 
-  <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-bold text-navy">Productos <span class="text-base font-normal text-gray-400">(<?= count($products) ?> en catálogo)</span></h1>
-    <a href="/" target="_blank" class="text-sm text-usablue hover:underline">Ver sitio →</a>
+  <!-- Barra superior: título + botón nuevo -->
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="text-2xl font-bold text-navy">
+      Productos
+      <span id="count-label" class="text-base font-normal text-gray-400">(<?= count($products) ?> en catálogo)</span>
+    </h1>
+    <button onclick="toggleNewForm()"
+      class="flex items-center gap-2 bg-usared text-white font-bold text-sm px-4 py-2.5 rounded-xl hover:bg-red-700 transition">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+      </svg>
+      Nuevo producto
+    </button>
   </div>
 
-  <div class="space-y-3">
+  <!-- Formulario nuevo producto -->
+  <div id="new-product-form" class="bg-white border-2 border-usared/30 rounded-2xl shadow-sm mb-5 overflow-hidden">
+    <div class="bg-usared/5 px-5 py-3 border-b border-usared/20 flex items-center justify-between">
+      <h2 class="font-bold text-sm text-usared">Agregar nuevo producto</h2>
+      <button type="button" onclick="toggleNewForm()" class="text-gray-400 hover:text-gray-600 text-xl leading-none">×</button>
+    </div>
+    <form method="POST" action="/admin/panel?action=add" class="p-5">
+      <div class="grid sm:grid-cols-2 gap-4">
+        <?php foreach ($editableFields as $field => $meta): ?>
+        <div <?= $meta['type'] === 'textarea' ? 'class="sm:col-span-2"' : '' ?>>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">
+            <?= $meta['label'] ?><?= $meta['required'] ? ' <span class="text-usared">*</span>' : '' ?>
+          </label>
+          <?php if ($meta['type'] === 'textarea'): ?>
+            <textarea name="<?= $field ?>" rows="2" placeholder="Descripción del producto..."
+              class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-usared resize-none"></textarea>
+          <?php else: ?>
+            <input type="<?= $meta['type'] ?>" name="<?= $field ?>"
+              <?= $meta['required'] ? 'required' : '' ?>
+              <?= $meta['type'] === 'number' ? 'step="any" min="0"' : '' ?>
+              placeholder="<?= htmlspecialchars($meta['label']) ?>"
+              class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-usared">
+          <?php endif; ?>
+        </div>
+        <?php endforeach; ?>
+      </div>
+      <div class="mt-5 flex gap-3">
+        <button type="submit"
+          class="flex-1 bg-usared text-white font-bold py-2.5 rounded-xl hover:bg-red-700 transition text-sm">
+          Crear producto
+        </button>
+        <button type="button" onclick="toggleNewForm()"
+          class="px-5 border border-gray-200 text-gray-600 font-semibold py-2.5 rounded-xl hover:border-gray-300 transition text-sm">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Barra de filtros -->
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3 mb-4 flex flex-wrap gap-3 items-center">
+    <!-- Búsqueda -->
+    <div class="relative flex-1 min-w-[180px]">
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+      </svg>
+      <input id="filter-search" type="search" placeholder="Buscar por nombre o marca..."
+        oninput="applyFilters()"
+        class="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy">
+    </div>
+    <!-- Categoría -->
+    <select id="filter-cat" onchange="applyFilters()"
+      class="border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-navy bg-white">
+      <option value="">Todas las categorías</option>
+      <?php foreach (array_keys($categories) as $cat): ?>
+        <option value="<?= htmlspecialchars($cat) ?>"><?= htmlspecialchars(ucfirst($cat)) ?></option>
+      <?php endforeach; ?>
+    </select>
+    <!-- Stock -->
+    <select id="filter-stock" onchange="applyFilters()"
+      class="border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-navy bg-white">
+      <option value="">Todo el stock</option>
+      <option value="in">En stock</option>
+      <option value="out">Sin stock</option>
+    </select>
+    <!-- Reset -->
+    <button onclick="resetFilters()"
+      class="text-xs text-gray-400 hover:text-gray-600 px-2 py-2 transition">
+      Limpiar
+    </button>
+    <!-- Contador visible -->
+    <span id="filter-count" class="text-xs text-gray-400 ml-auto"></span>
+  </div>
+
+  <!-- Lista de productos -->
+  <div id="products-list" class="space-y-3">
   <?php foreach ($products as $p):
-    $indice  = (int)$p['indice'];
-    $isOpen  = $savedId === $indice;
-    $images  = $p['_images'];
-    $precio  = isset($p['precio_venta_cop']) ? '$' . number_format((int)$p['precio_venta_cop'], 0, ',', '.') : '—';
-    $stock   = $p['cantidad'] ?? 0;
+    $indice   = (int)$p['indice'];
+    $isOpen   = $savedId === $indice;
+    $images   = $p['_images'];
+    $precio   = isset($p['precio_venta_cop']) ? '$' . number_format((int)$p['precio_venta_cop'], 0, ',', '.') : '—';
+    $stock    = (int)($p['cantidad'] ?? 0);
+    $catLower = strtolower(trim($p['categoria'] ?? ''));
+    $nameLower = strtolower($p['nombre_web'] ?? '');
+    $brandLower = strtolower($p['marca'] ?? '');
   ?>
-  <details id="prod-<?= $indice ?>" <?= $isOpen ? 'open' : '' ?>
-    class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+  <details id="prod-<?= $indice ?>"
+    class="prod-row bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden"
+    <?= $isOpen ? 'open' : '' ?>
+    data-name="<?= htmlspecialchars($nameLower) ?>"
+    data-brand="<?= htmlspecialchars($brandLower) ?>"
+    data-cat="<?= htmlspecialchars($catLower) ?>"
+    data-stock="<?= $stock > 0 ? 'in' : 'out' ?>">
 
     <!-- Fila resumen -->
     <summary class="flex items-center gap-4 px-5 py-4 cursor-pointer hover:bg-gray-50 transition select-none">
-      <!-- Miniatura -->
       <div class="w-12 h-12 flex-shrink-0 rounded-xl overflow-hidden bg-gray-50 border border-gray-100">
         <?php if (!empty($images)): ?>
           <img src="<?= IMG_WEB . htmlspecialchars($images[0]) ?>" class="w-full h-full object-contain" loading="lazy" alt="">
@@ -302,21 +450,17 @@ foreach (($data['orden_productos'] ?? array_keys($data['productos'] ?? [])) as $
           <div class="w-full h-full flex items-center justify-center text-2xl">📦</div>
         <?php endif; ?>
       </div>
-      <!-- Info -->
       <div class="flex-1 min-w-0">
         <div class="font-semibold text-sm truncate"><?= htmlspecialchars($p['nombre_web'] ?? '') ?></div>
-        <div class="text-xs text-gray-400"><?= htmlspecialchars($p['marca'] ?? '') ?> · <?= htmlspecialchars($p['categoria'] ?? '') ?></div>
+        <div class="text-xs text-gray-400"><?= htmlspecialchars($p['marca'] ?? '') ?><?= ($p['marca'] ?? '') && ($p['categoria'] ?? '') ? ' · ' : '' ?><?= htmlspecialchars($p['categoria'] ?? '') ?></div>
       </div>
-      <!-- Precio + stock -->
       <div class="text-right flex-shrink-0 hidden sm:block">
         <div class="font-bold text-usared text-sm"><?= $precio ?></div>
         <div class="text-xs <?= $stock > 0 ? 'text-green-600' : 'text-red-500' ?>">
           <?= $stock > 0 ? $stock . ' en stock' : 'Sin stock' ?>
         </div>
       </div>
-      <!-- # -->
       <div class="text-xs text-gray-300 hidden md:block flex-shrink-0">#<?= $indice ?></div>
-      <!-- Chevron -->
       <svg class="chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
       </svg>
@@ -326,7 +470,7 @@ foreach (($data['orden_productos'] ?? array_keys($data['productos'] ?? [])) as $
     <div class="border-t border-gray-100 px-5 py-6">
       <div class="grid md:grid-cols-2 gap-8">
 
-        <!-- Columna izquierda: formulario de edición -->
+        <!-- Datos del producto -->
         <div>
           <h3 class="font-semibold text-sm text-gray-700 mb-4">Datos del producto</h3>
           <form method="POST" action="/admin/panel?action=update&id=<?= $indice ?>">
@@ -354,7 +498,7 @@ foreach (($data['orden_productos'] ?? array_keys($data['productos'] ?? [])) as $
           </form>
         </div>
 
-        <!-- Columna derecha: imágenes -->
+        <!-- Imágenes -->
         <div>
           <h3 class="font-semibold text-sm text-gray-700 mb-4">
             Imágenes <span class="text-gray-400 font-normal">(<?= count($images) ?>)</span>
@@ -372,9 +516,7 @@ foreach (($data['orden_productos'] ?? array_keys($data['productos'] ?? [])) as $
                 onsubmit="return confirm('¿Eliminar esta imagen?')">
                 <input type="hidden" name="filename" value="<?= htmlspecialchars($imgFile) ?>">
                 <button type="submit"
-                  class="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold shadow hover:bg-red-600 transition">
-                  ×
-                </button>
+                  class="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold shadow hover:bg-red-600 transition">×</button>
               </form>
               <div class="text-center text-xs text-gray-400 mt-1 truncate"><?= htmlspecialchars($imgFile) ?></div>
             </div>
@@ -386,7 +528,6 @@ foreach (($data['orden_productos'] ?? array_keys($data['productos'] ?? [])) as $
           </div>
           <?php endif; ?>
 
-          <!-- Upload -->
           <form method="POST" action="/admin/panel?action=upload&id=<?= $indice ?>"
             enctype="multipart/form-data"
             class="border-2 border-dashed border-gray-200 rounded-xl p-4 text-center hover:border-navy transition">
@@ -407,7 +548,67 @@ foreach (($data['orden_productos'] ?? array_keys($data['productos'] ?? [])) as $
   <?php endforeach; ?>
   </div>
 
+  <!-- Mensaje sin resultados -->
+  <div id="no-results" class="hidden text-center py-16 text-gray-400">
+    <div class="text-4xl mb-3">🔍</div>
+    <p class="font-semibold">Sin resultados</p>
+    <p class="text-sm mt-1">Intenta con otro término o limpia los filtros.</p>
+  </div>
+
 </main>
+
+<script>
+function toggleNewForm() {
+  const form = document.getElementById('new-product-form');
+  form.classList.toggle('open');
+  if (form.classList.contains('open')) {
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    form.querySelector('input[name="nombre_web"]')?.focus();
+  }
+}
+
+function applyFilters() {
+  const search = document.getElementById('filter-search').value.toLowerCase().trim();
+  const cat    = document.getElementById('filter-cat').value.toLowerCase();
+  const stock  = document.getElementById('filter-stock').value;
+
+  const rows   = document.querySelectorAll('.prod-row');
+  let visible  = 0;
+
+  rows.forEach(row => {
+    const name  = row.dataset.name  || '';
+    const brand = row.dataset.brand || '';
+    const rCat  = row.dataset.cat   || '';
+    const rStk  = row.dataset.stock || '';
+
+    const matchSearch = !search || name.includes(search) || brand.includes(search);
+    const matchCat    = !cat    || rCat === cat;
+    const matchStock  = !stock  || rStk === stock;
+
+    if (matchSearch && matchCat && matchStock) {
+      row.classList.remove('hidden-filter');
+      visible++;
+    } else {
+      row.classList.add('hidden-filter');
+    }
+  });
+
+  const total = rows.length;
+  const countEl = document.getElementById('filter-count');
+  countEl.textContent = (search || cat || stock)
+    ? visible + ' de ' + total + ' productos'
+    : '';
+
+  document.getElementById('no-results').classList.toggle('hidden', visible > 0);
+}
+
+function resetFilters() {
+  document.getElementById('filter-search').value = '';
+  document.getElementById('filter-cat').value    = '';
+  document.getElementById('filter-stock').value  = '';
+  applyFilters();
+}
+</script>
 
 </body>
 </html>
