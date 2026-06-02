@@ -105,8 +105,15 @@ if (empty($_SESSION['admin_auth'])) {
 
 // ── Acciones autenticadas ─────────────────────────────────────────────────────
 
-$savedId  = isset($_GET['saved']) ? (int)$_GET['saved'] : 0;
-$flashMsg = '';
+$savedId    = isset($_GET['saved']) ? (int)$_GET['saved'] : 0;
+$writeError = !empty($_GET['write_error']);
+$errorInfo  = $writeError ? [
+    'file'     => $_GET['file']     ?? DATA_PATH,
+    'writable' => $_GET['writable'] ?? '?',
+    'owner'    => $_GET['owner']    ?? '?',
+    'process'  => $_GET['process']  ?? '?',
+] : [];
+$flashMsg   = '';
 
 // Editable fields
 $editableFields = [
@@ -147,8 +154,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
         }
     }
     unset($p);
-    writeInventory($data);
-    header('Location: /admin/panel?saved=' . $id . '#prod-' . $id);
+
+    if (writeInventory($data)) {
+        header('Location: /admin/panel?saved=' . $id . '#prod-' . $id);
+    } else {
+        $path    = DATA_PATH;
+        $writable = is_writable($path) ? 'sí' : 'NO';
+        $owner   = function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($path))['name'] ?? '?' : '?';
+        $process = function_exists('posix_getpwuid') ? posix_getpwuid(posix_geteuid())['name'] ?? '?' : '?';
+        header('Location: /admin/panel?write_error=1&file=' . urlencode($path)
+            . '&writable=' . urlencode($writable)
+            . '&owner=' . urlencode($owner)
+            . '&process=' . urlencode($process)
+            . '#prod-' . $id);
+    }
     exit;
 }
 
@@ -226,8 +245,8 @@ foreach (($data['orden_productos'] ?? array_keys($data['productos'] ?? [])) as $
   </a>
 </header>
 
-<!-- Flash -->
-<?php if ($savedId): ?>
+<!-- Flash éxito -->
+<?php if ($savedId && !$writeError): ?>
 <div id="flash" class="bg-green-50 border-b border-green-200 text-green-700 text-sm px-6 py-3 flex items-center gap-2">
   <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
@@ -235,6 +254,23 @@ foreach (($data['orden_productos'] ?? array_keys($data['productos'] ?? [])) as $
   Cambios guardados correctamente (producto #<?= $savedId ?>).
 </div>
 <script>setTimeout(() => { const f = document.getElementById('flash'); if (f) f.remove(); }, 4000);</script>
+<?php endif; ?>
+
+<!-- Flash error de escritura -->
+<?php if ($writeError): ?>
+<div class="bg-red-50 border-b border-red-300 text-red-800 text-sm px-6 py-4">
+  <p class="font-bold mb-1">⚠️ Error: no se pudo guardar el archivo JSON.</p>
+  <p class="mb-2">El proceso PHP no tiene permiso de escritura sobre el inventario.</p>
+  <div class="font-mono text-xs bg-red-100 rounded p-3 space-y-1">
+    <div><strong>Archivo:</strong> <?= htmlspecialchars($errorInfo['file']) ?></div>
+    <div><strong>¿Escribible?:</strong> <?= htmlspecialchars($errorInfo['writable']) ?></div>
+    <div><strong>Dueño del archivo:</strong> <?= htmlspecialchars($errorInfo['owner']) ?></div>
+    <div><strong>Proceso PHP corre como:</strong> <?= htmlspecialchars($errorInfo['process']) ?></div>
+  </div>
+  <p class="mt-2 text-xs">Solución en el servidor:
+    <code class="bg-red-100 px-1 rounded">chmod 664 data/inventory.json && chown <?= htmlspecialchars($errorInfo['process']) ?>:<?= htmlspecialchars($errorInfo['process']) ?> data/inventory.json</code>
+  </p>
+</div>
 <?php endif; ?>
 
 <!-- Contenido principal -->
