@@ -9,6 +9,11 @@ require_once __DIR__ . '/../Controllers/HomeController.php';
 
 $path = rtrim(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '/') ?: '/';
 
+if ($path === '/admin/panel') {
+    include __DIR__ . '/../admin/panel.php';
+    return;
+}
+
 if (str_starts_with($path, '/ciudad/')) {
     include __DIR__ . '/ciudad.php';
     return;

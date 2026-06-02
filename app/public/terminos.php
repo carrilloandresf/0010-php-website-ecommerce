@@ -243,7 +243,7 @@
         <p class="text-gray-700 text-sm leading-relaxed">
           El titular de los datos tiene derecho a conocer, actualizar, rectificar y suprimir sus datos.
           Para ejercer estos derechos, puede contactarnos a través de WhatsApp al número
-          <strong>+17865683345</strong>.
+          <strong>+57 311 2866614</strong>.
         </p>
       </section>
 
@@ -306,7 +306,7 @@
         </p>
         <ul class="text-sm text-gray-700 space-y-1">
           <li><strong>Plataforma:</strong> <a href="https://fromusa.com.co" class="text-usared hover:underline">fromusa.com.co</a></li>
-          <li><strong>WhatsApp:</strong> +1 (786) 568-3345</li>
+          <li><strong>WhatsApp:</strong> +57 311 2866614</li>
           <li><strong>Desarrollado por:</strong> <a href="https://111labs.net" target="_blank" rel="noopener noreferrer" class="text-usared hover:underline">111labs S.A.S — 111labs.net</a></li>
         </ul>
       </div>

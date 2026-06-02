@@ -1,0 +1,10 @@
+# Datos de inventario — se gestionan en producción via admin panel
+data/inventory.json
+
+# Imágenes de productos — se gestionan en producción via admin panel
+app/public/img/
+
+# Artefactos de OS/editor
+.DS_Store
+*.swp
+*.swo

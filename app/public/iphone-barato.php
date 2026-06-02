@@ -236,7 +236,7 @@ $jsonLd = [
     <div class="bg-navy rounded-2xl px-6 py-7 text-white text-center">
       <h2 class="font-bold text-lg mb-1">¿No encontraste el iPhone que buscas?</h2>
       <p class="text-white/60 text-sm mb-4">Escríbenos y te avisamos cuando tengamos disponible el modelo que necesitas.</p>
-      <a href="https://wa.me/17865683345?text=Hola%2C%20estoy%20buscando%20un%20iPhone%20barato%20en%20Colombia.%20%C2%BFQu%C3%A9%20modelos%20tienen%20disponibles%3F"
+      <a href="https://wa.me/573112866614?text=Hola%2C%20estoy%20buscando%20un%20iPhone%20barato%20en%20Colombia.%20%C2%BFQu%C3%A9%20modelos%20tienen%20disponibles%3F"
          target="_blank" rel="noopener noreferrer"
          class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">

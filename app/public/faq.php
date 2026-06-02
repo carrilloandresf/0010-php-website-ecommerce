@@ -330,7 +330,7 @@
         <div class="bg-navy text-white rounded-3xl p-8 text-center">
           <h2 class="text-xl font-bold mb-2">¿No encontraste lo que buscabas?</h2>
           <p class="text-white/60 text-sm mb-6">Escríbenos directamente por WhatsApp. Respondemos rápido.</p>
-          <a href="https://wa.me/17865683345?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20FromUSA.com.co"
+          <a href="https://wa.me/573112866614?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20FromUSA.com.co"
              target="_blank" rel="noopener noreferrer"
              class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold text-sm px-6 py-3 rounded-xl transition">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">

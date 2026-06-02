@@ -70,7 +70,7 @@ $jsonLd = [
             'founder'     => ['@type' => 'Organization', 'name' => '111labs S.A.S', 'url' => 'https://111labs.net'],
             'contactPoint' => [
                 '@type'           => 'ContactPoint',
-                'telephone'       => '+17865683345',
+                'telephone'       => '+573112866614',
                 'contactType'     => 'customer service',
                 'contactOption'   => 'TollFree',
                 'availableLanguage' => 'Spanish',
@@ -163,8 +163,14 @@ echo '  <script type="application/ld+json">' . json_encode($jsonLd, JSON_UNESCAP
     html, body { height: 100%; margin: 0; box-sizing: border-box; }
     .cart-badge { animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-    .product-card { transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
-    .product-card:active { transform: scale(0.97); }
+    .product-card {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .product-card.visible { opacity: 1; transform: translateY(0); }
+    .product-card:active { transform: scale(0.97) !important; }
     .product-card:hover { box-shadow: 0 6px 28px rgba(0,0,0,0.10); }
     .fade-in { animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
@@ -573,6 +579,12 @@ $categoryEmoji = [
                    flex items-center justify-center gap-2 active:bg-usablue transition text-sm">
             <i data-lucide="plus" class="w-4 h-4"></i> Agregar al carrito
           </button>
+          <button id="modal-share-btn" onclick="copyProductLink()"
+            class="mt-3 w-full border border-gray-200 text-gray-500 font-semibold py-3 rounded-2xl
+                   flex items-center justify-center gap-2 hover:border-navy hover:text-navy transition text-sm">
+            <i data-lucide="share-2" class="w-4 h-4"></i>
+            <span id="modal-share-label">Copiar enlace</span>
+          </button>
         </div>
       </div>
 
@@ -582,7 +594,7 @@ $categoryEmoji = [
 
   <!-- ── WhatsApp float ────────────────────────────── -->
   <a
-    href="https://wa.me/17865683345?text=<?= urlencode('¡Hola! Vi sus productos importados de USA y me gustaría saber más 🇺🇸') ?>"
+    href="https://wa.me/573112866614?text=<?= urlencode('¡Hola! Vi sus productos importados de USA y me gustaría saber más 🇺🇸') ?>"
     target="_blank"
     rel="noopener noreferrer"
     class="fixed bottom-5 right-5 z-50 bg-green-500 text-white w-14 h-14 rounded-full
@@ -599,7 +611,7 @@ window.catalogProducts = <?= json_encode($products, JSON_UNESCAPED_UNICODE) ?>;
 </script>
 
 <script>
-const WHATSAPP_NUMBER = '17865683345';
+const WHATSAPP_NUMBER = '573112866614';
 
 let cart           = [];
 let activeCategory = 'all';
@@ -634,11 +646,31 @@ function initCardSlideshows() {
 
 // ── Filtros ──────────────────────────────────────
 function applyFilters() {
+  let visibleIdx = 0;
   document.querySelectorAll('[data-category]').forEach(card => {
     const catOk   = activeCategory === 'all' || card.dataset.category === activeCategory;
     const brandOk = activeBrand   === 'all' || card.dataset.brand     === activeBrand;
-    card.style.display = (catOk && brandOk) ? '' : 'none';
+    const show    = catOk && brandOk;
+    card.style.display = show ? '' : 'none';
+    if (show) {
+      card.classList.remove('visible');
+      card.style.transitionDelay = (visibleIdx++ * 55) + 'ms';
+    }
   });
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.querySelectorAll('[data-category]').forEach(card => {
+      if (card.style.display !== 'none') card.classList.add('visible');
+    });
+  }));
+}
+
+// ── Animación escalonada inicial ──────────────────
+function initCardAnimations() {
+  const cards = [...document.querySelectorAll('.product-card')];
+  cards.forEach((card, i) => { card.style.transitionDelay = (i * 90) + 'ms'; });
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    cards.forEach(card => card.classList.add('visible'));
+  }));
 }
 
 function filterCategory(id) {
@@ -851,6 +883,7 @@ function openModal(id) {
   document.getElementById('product-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
   lucide.createIcons();
+  history.pushState({ productoId: id }, '', '?producto=' + id);
 }
 
 function renderModalGallery() {
@@ -905,6 +938,15 @@ function closeModal() {
   document.getElementById('product-modal').classList.remove('open');
   document.body.style.overflow = '';
   currentProduct = null;
+  history.replaceState({}, '', window.location.pathname);
+}
+
+function copyProductLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const label = document.getElementById('modal-share-label');
+    label.textContent = '¡Enlace copiado!';
+    setTimeout(() => { label.textContent = 'Copiar enlace'; }, 2000);
+  });
 }
 
 
@@ -915,7 +957,21 @@ document.addEventListener('keydown', e => {
 
 // ── Init ─────────────────────────────────────────
 initCardSlideshows();
+initCardAnimations();
 lucide.createIcons();
+
+// Abrir modal si la URL trae ?producto=ID
+(function() {
+  const id = parseInt(new URLSearchParams(location.search).get('producto'), 10);
+  if (id) openModal(id);
+})();
+
+// Soporte para botón Atrás del navegador
+window.addEventListener('popstate', () => {
+  const id = parseInt(new URLSearchParams(location.search).get('producto'), 10);
+  if (id) openModal(id);
+  else closeModal();
+});
 </script>
 </body>
 </html>

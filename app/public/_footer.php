@@ -70,7 +70,7 @@
           <li>— Toda Colombia como mercado</li>
           <li>— Tratos directos por WhatsApp</li>
         </ul>
-        <a href="https://wa.me/17865683345?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20FromUSA.com.co"
+        <a href="https://wa.me/573112866614?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20FromUSA.com.co"
            target="_blank" rel="noopener noreferrer"
            class="inline-flex items-center gap-2 bg-green-600/20 hover:bg-green-600/30 border border-green-600/30
                   text-green-400 text-xs px-3 py-2 rounded-lg transition">

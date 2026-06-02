@@ -269,7 +269,7 @@
         <p class="text-gray-500 text-sm leading-relaxed mb-8">
           Escríbenos por WhatsApp y cuéntanos qué tienes. Sin formularios, sin esperas. El proceso empieza hoy.
         </p>
-        <a href="https://wa.me/573014893414?text=Hola%2C%20quiero%20registrarme%20como%20vendedor%20en%20FromUSA.com.co.%20Cumplo%20con%20los%20requisitos%20y%20tengo%20productos%20de%20origen%20estadounidense."
+        <a href="https://wa.me/573112866614?text=Hola%2C%20quiero%20registrarme%20como%20vendedor%20en%20FromUSA.com.co.%20Cumplo%20con%20los%20requisitos%20y%20tengo%20productos%20de%20origen%20estadounidense."
            target="_blank" rel="noopener noreferrer"
            class="inline-flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white font-bold text-base px-8 py-4 rounded-2xl transition shadow-lg shadow-green-600/20">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">

@@ -271,7 +271,7 @@ $jsonLd = [
     <div class="mt-10 bg-navy rounded-2xl px-6 py-6 text-white text-center">
       <h2 class="font-bold text-lg mb-1">¿Buscas algo específico?</h2>
       <p class="text-white/60 text-sm mb-4">Escríbenos por WhatsApp y te ayudamos a encontrar el producto que necesitas.</p>
-      <a href="https://wa.me/17865683345?text=Hola%2C%20estoy%20buscando%20<?= urlencode($meta['label']) ?>%20importados%20de%20USA"
+      <a href="https://wa.me/573112866614?text=Hola%2C%20estoy%20buscando%20<?= urlencode($meta['label']) ?>%20importados%20de%20USA"
          target="_blank" rel="noopener noreferrer"
          class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
